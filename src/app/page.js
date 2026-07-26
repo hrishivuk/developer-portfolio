@@ -57,42 +57,6 @@ const heroRoles = [
   ["Frontend", "Developer"],
 ];
 
-const workItems = [
-  {
-    title: "Frontend Developer - Contract",
-    place: "Pixel Forge Design Limited - Dublin, Ireland",
-    period: "May 2025 - October 2025",
-  },
-  {
-    title: "Frontend Developer - Freelance",
-    place: "Remote - India / Ireland",
-    period: "October 2024 - March 2025",
-  },
-  {
-    title: "Associate Frontend Developer",
-    place: "Experion Technologies - India",
-    period: "May 2023 - August 2024",
-  },
-  {
-    title: "Frontend Developer Intern",
-    place: "Experion Technologies - India",
-    period: "Nov 2022 - March 2023",
-  },
-];
-
-const educationItems = [
-  {
-    title: "MSc in Creative Digital Media & UX",
-    place: "Technological University Dublin, Ireland",
-    period: "2024 - 2026",
-  },
-  {
-    title: "Bachelor of Technology in Computer Science",
-    place: "APJ Abdul Kalam Technological University, Kerala, India",
-    period: "2018 - 2022",
-  },
-];
-
 const inputBase =
   "w-full rounded-2xl border px-4 py-3.5 text-sm outline-none focus:border-cyan-200/40 focus:ring-2 focus:ring-cyan-200/10";
 
@@ -161,91 +125,6 @@ function HeroTitle() {
         </motion.span>
       </AnimatePresence>
     </h1>
-  );
-}
-
-const roadmapPanelReveal = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.12,
-    },
-  },
-};
-
-const roadmapItemReveal = {
-  hidden: { opacity: 0, y: 18 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.45, ease: "easeOut" },
-  },
-};
-
-function RoadmapPanel({ title, items }) {
-  return (
-    <motion.div
-      className="rounded-[28px] border border-white/10 bg-white/[0.018] p-5 sm:p-6"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: false, amount: 0.38, margin: "-8% 0px -12% 0px" }}
-      variants={roadmapPanelReveal}
-    >
-      <motion.p
-        variants={roadmapItemReveal}
-        className="mb-7 text-sm font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]"
-      >
-        {title}
-      </motion.p>
-
-      <div className="relative">
-        <motion.span
-          className="absolute left-0 top-2 h-full w-px origin-top bg-cyan-100/14"
-          variants={{
-            hidden: { scaleY: 0 },
-            visible: {
-              scaleY: 1,
-              transition: { duration: 0.7, ease: "easeOut" },
-            },
-          }}
-        />
-
-        <div className="space-y-6">
-          {items.map((item) => (
-            <motion.article
-              key={`${title}-${item.title}`}
-              variants={roadmapItemReveal}
-              className="relative grid gap-3 pl-5"
-            >
-              <motion.span
-                className="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full bg-[var(--accent-secondary)] shadow-[0_0_16px_rgba(77,255,181,0.75)]"
-                variants={{
-                  hidden: { scale: 0.45, opacity: 0 },
-                  visible: {
-                    scale: 1,
-                    opacity: 1,
-                    transition: { duration: 0.32, ease: "easeOut" },
-                  },
-                }}
-              />
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                <h4 className="text-lg font-black leading-tight tracking-[-0.015em] text-white">
-                  {item.title}
-                </h4>
-                <p className="shrink-0 font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--text-muted)]">
-                  {item.period}
-                </p>
-              </div>
-              <p className="text-sm font-semibold leading-6 text-[var(--text-secondary)]">
-                {item.place}
-              </p>
-            </motion.article>
-          ))}
-        </div>
-      </div>
-    </motion.div>
   );
 }
 
@@ -1010,18 +889,6 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="grid gap-8 lg:grid-cols-2">
-              {[
-                { title: "Experience", items: workItems },
-                { title: "Education", items: educationItems },
-              ].map((group) => (
-                <RoadmapPanel
-                  key={group.title}
-                  title={group.title}
-                  items={group.items}
-                />
-              ))}
-            </div>
           </div>
         </SectionShell>
 
