@@ -715,15 +715,7 @@ export default function Home() {
 
   const sortedProjects = useMemo(() => getSortedProjects(projects), []);
   const selectedProjects = useMemo(
-    () =>
-      [
-        "coach-canvas",
-        "findaside-football-planner",
-        "brightspace-learning-experience",
-        "flexsave-smart-savings",
-      ]
-        .map((id) => sortedProjects.find((project) => project.id === id))
-        .filter(Boolean),
+    () => sortedProjects.filter((project) => project.featured),
     [sortedProjects],
   );
 
@@ -893,100 +885,102 @@ export default function Home() {
         </SectionShell>
 
         <SectionShell id="projects" eyebrow="Selected projects">
-          <div className="grid gap-8 border-t border-white/10 pt-9">
-            {selectedProjects.map((project, index) => (
+          <div className="-mx-3 flex snap-x snap-mandatory gap-4 overflow-x-auto border-t border-white/10 px-3 pb-4 pt-9 sm:-mx-4 sm:px-4 md:-mx-6 md:px-6 lg:-mx-8 lg:px-8">
+            {selectedProjects.slice(0, 3).map((project, index) => (
               <motion.article
                 key={project.id}
-                className="group grid gap-6 overflow-hidden border-b border-white/10 pb-8 lg:grid-cols-[0.62fr_0.38fr] lg:items-center"
+                className="group h-[360px] w-[280px] shrink-0 snap-start sm:w-[300px] xl:w-[calc(25%-0.75rem)]"
                 initial={
                   reduceMotion
                     ? { opacity: 1 }
-                    : { opacity: 0, y: 42, filter: "blur(10px)" }
+                    : { opacity: 0, y: 28, filter: "blur(8px)" }
                 }
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                viewport={{ amount: 0.28, once: false, margin: "-8% 0px" }}
+                viewport={{ amount: 0.2, once: true, margin: "-6% 0px" }}
                 transition={{
-                  duration: 0.72,
-                  delay: reduceMotion ? 0 : index * 0.08,
+                  duration: 0.6,
+                  delay: reduceMotion ? 0 : (index % 2) * 0.08,
                   ease: [0.22, 1, 0.36, 1],
                 }}
               >
-                <div className="grid gap-5 sm:grid-cols-[56px_1fr]">
-                  <motion.p
-                    className="font-mono text-sm font-bold text-[var(--text-muted)]"
-                    initial={reduceMotion ? false : { opacity: 0, x: -12 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ amount: 0.4, once: false }}
-                    transition={{
-                      duration: 0.5,
-                      delay: reduceMotion ? 0 : index * 0.08 + 0.12,
-                    }}
-                  >
-                    {String(index + 1).padStart(2, "0")}.
-                  </motion.p>
-                  <div>
-                    <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-[var(--accent-secondary)]">
-                      {project.category} / {project.year}
-                    </p>
-                    <h3 className="text-[clamp(2rem,4.8vw,4.15rem)] font-black leading-[0.9] tracking-[-0.04em] text-white group-hover:text-cyan-100">
-                      {getProjectName(project.title)}
-                    </h3>
-                    {project.workInProgress ? (
-                      <div className="mt-3 inline-flex overflow-hidden rounded-full border border-yellow-300/80 bg-yellow-300 px-3 py-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.18)]">
-                        <span className="relative z-10 text-[10px] font-black uppercase tracking-[0.16em] text-black">
-                          Work in progress
-                        </span>
-                      </div>
-                    ) : null}
-                    {getProjectDescriptor(project.title) && (
-                      <p className="mt-3 text-xl font-bold text-white/85">
-                        {getProjectDescriptor(project.title)}
-                      </p>
-                    )}
-                    <p className="mt-5 max-w-3xl text-base leading-7 text-[var(--text-secondary)]">
-                      {project.summary}
-                    </p>
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {(project.technologies || []).slice(0, 4).map((tool) => (
-                        <span
-                          key={tool}
-                          className="rounded-full border border-white/10 px-3 py-1 text-xs font-bold text-cyan-50/90"
-                        >
-                          {tool}
-                        </span>
-                      ))}
-                    </div>
-                    <ProjectTransitionLink
-                      href={`/projects/${project.id}`}
-                      className="mt-6 inline-flex items-center gap-2 rounded-full border border-cyan-200/25 bg-cyan-200/10 px-4 py-2 text-sm font-bold text-white"
-                    >
-                      View case study
-                      <FiArrowUpRight aria-hidden />
-                    </ProjectTransitionLink>
-                  </div>
-                </div>
-                <motion.div
-                  className="relative min-h-[240px] overflow-hidden rounded-[24px] border border-white/10 bg-black/30 sm:min-h-[320px]"
-                  whileHover={reduceMotion ? undefined : { y: -8, scale: 1.015 }}
-                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                <ProjectTransitionLink
+                  href={`/projects/${project.id}`}
+                  label={`Opening ${getProjectName(project.title)} case study`}
+                  className="flex h-full flex-col rounded-[28px] border border-white/10 bg-white/[0.025] p-4 transition-colors duration-300 hover:border-cyan-200/25 hover:bg-white/[0.045] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/60"
                 >
-                  {project.image ? (
-                    <Image
-                      src={project.image}
-                      alt=""
-                      fill
-                      sizes="(min-width: 1024px) 34vw, 100vw"
-                      className={`${
-                        project.heroFit === "contain"
-                          ? "object-contain p-6"
-                          : "object-cover"
-                      }`}
-                    />
-                  ) : null}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                </motion.div>
+                  <div className="flex h-[116px] items-start justify-between gap-4 px-1 pb-4 pt-1">
+                    <div className="min-w-0">
+                      <h3 className="line-clamp-2 text-[1.65rem] font-black leading-[0.95] tracking-[-0.035em] text-white transition-colors group-hover:text-cyan-100">
+                        {getProjectName(project.title)}
+                      </h3>
+                      <p className="mt-2 line-clamp-2 text-sm font-semibold leading-5 text-[var(--text-secondary)]">
+                        {getProjectDescriptor(project.title) || project.summary}
+                      </p>
+                    </div>
+                    <span
+                      className="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.035] text-white transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                      aria-hidden
+                    >
+                      <FiArrowUpRight />
+                    </span>
+                  </div>
+
+                  <motion.div
+                    className="relative min-h-0 flex-1 overflow-hidden rounded-[20px] border border-white/10 bg-black/30"
+                    whileHover={reduceMotion ? undefined : { y: -4 }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    {project.image ? (
+                      <Image
+                        src={project.image}
+                        alt={`${getProjectName(project.title)} project preview`}
+                        fill
+                        sizes="(min-width: 640px) 50vw, 100vw"
+                        className={`transition-transform duration-500 group-hover:scale-[1.025] ${
+                          project.heroFit === "contain"
+                            ? "object-contain p-5"
+                            : "object-cover"
+                        }`}
+                      />
+                    ) : null}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
+                    <div className="absolute inset-x-3 bottom-3 flex items-end justify-between gap-3">
+                      <span className="rounded-full border border-white/15 bg-[#07090c]/85 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.15em] text-cyan-50 backdrop-blur-md">
+                        {project.category}
+                      </span>
+                      <span className="font-mono text-xs font-bold text-white/70">
+                        {project.year}
+                      </span>
+                    </div>
+                    {project.workInProgress ? (
+                      <span className="absolute right-3 top-3 rounded-full bg-yellow-300 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.14em] text-black shadow-lg">
+                          Work in progress
+                      </span>
+                    ) : null}
+                  </motion.div>
+                </ProjectTransitionLink>
               </motion.article>
             ))}
+
+            <Link
+              href="/projects"
+              className="group flex h-[360px] w-[280px] shrink-0 snap-start flex-col justify-between rounded-[28px] border border-cyan-200/20 bg-cyan-200/[0.055] p-6 transition-colors hover:border-cyan-200/40 hover:bg-cyan-200/[0.09] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/60 sm:w-[300px] xl:w-[calc(25%-0.75rem)]"
+            >
+              <span className="page-eyebrow text-[var(--accent-secondary)]">
+                Full archive
+              </span>
+              <div>
+                <span className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full border border-cyan-100/20 bg-cyan-100/10 text-xl text-white transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1">
+                  <FiArrowUpRight aria-hidden />
+                </span>
+                <h3 className="text-3xl font-black leading-none tracking-[-0.035em] text-white">
+                  View all projects
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">
+                  Explore the complete collection of product, UX and development work.
+                </p>
+              </div>
+            </Link>
           </div>
         </SectionShell>
 
