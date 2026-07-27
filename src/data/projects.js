@@ -9,6 +9,10 @@ export const projects = [
     category: "Full Product Lifecycle",
     year: "2025",
     featured: true,
+    cardImpact:
+      "Designed and built a role-aware Android product from user research through release preparation.",
+    oneLiner:
+      "A mobile app helping grassroots football clubs manage onboarding, squads and match preparation.",
     summary:
       "A research-informed mobile product designed and developed to help football coaches and players manage onboarding, squads, match preparation, and performance reviews in one structured experience.",
     description:
@@ -146,11 +150,94 @@ export const projects = [
     ],
   },
   {
+    id: "waypoint-career-intelligence",
+    title: "Waypoint – Career Intelligence Platform",
+    category: "AI Engineering / Product Design / Full-Stack Web Development",
+    cardCategory: "AI Product · Full-Stack",
+    year: "2026",
+    featured: true,
+    cardImpact:
+      "Turns career evidence, job requirements and application work into explainable decisions in one private workspace.",
+    oneLiner:
+      "A private career intelligence platform that evaluates job fit, recommends the right CV and simplifies applications.",
+    summary:
+      "Waypoint brings career knowledge, CVs, job analysis and reusable application answers into one evidence-based workspace instead of disconnected AI conversations.",
+    description:
+      "Waypoint creates a confirmed career knowledge base containing skills, experience, projects, preferences and evidence. It compares that knowledge with atomic job requirements, distinguishes supported evidence from unknowns and genuine conflicts, then recommends the best stored CV and explains what should be tailored.",
+    image: "/images/waypoint/waypoint.png",
+    heroFit: "contain",
+    platform: "Responsive web application · Career intelligence dashboard",
+    timeline: "Iterative personal project · 2026",
+    status: "Portfolio-ready build · Ready for deployment",
+    role: "Product Owner · UX/UI Designer · Full-Stack Developer · AI Systems Designer",
+    technologies: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Tailwind CSS",
+      "Supabase",
+      "PostgreSQL",
+      "Supabase Auth",
+      "Groq API",
+      "Zod",
+      "Vitest",
+      "GitHub",
+      "Codex / ChatGPT",
+    ],
+    liveUrl: "https://waypoint-career-intelligence.vercel.app/",
+    githubUrl: "https://github.com/hrishivuk/waypoint-career-intelligence",
+    problem:
+      "General AI chats can understand a user over time, but that knowledge remains hidden inside conversations and is difficult to inspect, correct or reuse reliably. Job seekers also repeat the same work across job descriptions, different CVs and application forms.",
+    solution:
+      "Waypoint creates a confirmed and editable career knowledge base, compares it with atomic job requirements, separates supported evidence from unknowns and conflicts, and recommends the most suitable stored CV with clear tailoring guidance.",
+    keyFeatures: [
+      "Confirmed and editable career knowledge",
+      "Evidence-backed job-fit analysis",
+      "Supported, partial, unknown and conflicting requirement states",
+      "Multiple-CV library with ranking and tailoring recommendations",
+      "Reusable application details and copy-ready answers",
+      "Private workspace with an isolated public demo",
+    ],
+    caseStudy: {
+      eyebrow: "Career intelligence system",
+      timeline: "Iterative personal project · 2026",
+      status: "Portfolio-ready build",
+      problem:
+        "Career information is usually scattered across CV files, job descriptions, application forms and opaque AI conversations. That makes it difficult to know what is proven, what is missing and what should be improved.",
+      opportunity:
+        "Build a private, explainable workspace that turns a person’s career evidence into reusable intelligence for better job decisions and faster applications.",
+      users: ["Job seekers", "Career changers", "Professionals applying at scale"],
+      productThinking: [
+        "Separated a person’s career profile from any single CV so the underlying evidence can be reused across applications.",
+        "Modelled job descriptions as atomic requirements so recommendations can explain fit instead of returning one opaque score.",
+        "Kept the public demo isolated from private career data to make the product easier to evaluate safely.",
+      ],
+      designDecisions: [
+        "Made every recommendation traceable to confirmed evidence, an unknown or a genuine conflict.",
+        "Designed career knowledge as editable records with proficiency and supporting evidence rather than a one-time import.",
+        "Focused application support on reusable answers and clear tailoring actions instead of generating generic copy.",
+      ],
+      engineeringDecisions: [
+        "Built the full-stack application with Next.js, TypeScript, Supabase and PostgreSQL.",
+        "Used Zod and Vitest to validate boundaries and protect the reliability of analysis workflows.",
+        "Used Groq API behind explicit product rules so AI assistance supports explainable system behaviour.",
+      ],
+      outcome:
+        "Waypoint demonstrates a complete AI product loop: structured personal data, evidence-based analysis, privacy-aware architecture and practical application support.",
+      reflection:
+        "The central design challenge was making AI useful without making it mysterious. The product became clearer once every recommendation had to point back to evidence the user could inspect and correct.",
+    },
+  },
+  {
     id: "flexsave-smart-savings",
     title: "FlexSave – Smart Savings App",
     category: "UX Design",
     year: "2025",
     featured: true,
+    cardImpact:
+      "Turned budgeting frustrations into a focused savings concept during a five-day design sprint.",
+    oneLiner:
+      "A flexible mobile savings concept designed to make financial progress feel achievable.",
     workInProgress: true,
     workInProgressLabel: "Case study rebuild in progress",
     summary:
@@ -243,6 +330,10 @@ export const projects = [
     category: "UX / Product Design",
     year: "2025",
     featured: true,
+    cardImpact:
+      "Owned the Resume Builder experience and helped validate the wider concept through usability testing.",
+    oneLiner:
+      "A career-growth extension for Brightspace Pulse centred on an end-to-end résumé builder.",
     summary:
       "A research-led team UX concept extending Brightspace Pulse with career-growth tools, validated through moderated usability testing. I contributed to research and owned the end-to-end Resume Builder design.",
     description:
@@ -421,6 +512,8 @@ export const projects = [
     category: "Frontend Development",
     year: "2025",
     featured: false,
+    oneLiner:
+      "An editorial portfolio designed to make multidisciplinary product work easier to understand.",
     summary:
       "A job-hunt portfolio with accessible theme switching, soft ambient backgrounds, and a content-first layout built for recruiters.",
     description:
@@ -476,6 +569,10 @@ export const projects = [
     category: "Frontend Development",
     year: "2025",
     featured: true,
+    cardImpact:
+      "Built a complete responsive product interface for organising games, players, teams and payments.",
+    oneLiner:
+      "A responsive platform for creating, discovering and managing casual football games.",
     summary:
       "A responsive product UI that turns the complex work of organising casual football games into clear flows for onboarding, discovery, game creation, team management, and payments.",
     description:

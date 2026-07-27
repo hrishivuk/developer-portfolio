@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  AnimatePresence,
   motion,
   useMotionValue,
   useReducedMotion,
@@ -51,14 +50,8 @@ const particles = [
   { left: "52%", top: "52%", size: 1, delay: 1.8, duration: 11.2 },
 ];
 
-const heroRoles = [
-  ["UX/UI", "Designer"],
-  ["UX", "Researcher"],
-  ["Frontend", "Developer"],
-];
-
 const inputBase =
-  "w-full rounded-2xl border px-4 py-3.5 text-sm outline-none focus:border-cyan-200/40 focus:ring-2 focus:ring-cyan-200/10";
+  "w-full rounded-2xl border px-4 py-3.5 text-sm outline-none focus:border-[var(--border-secondary)] focus:ring-2 focus:ring-white/10";
 
 function scrollToSection(id) {
   const node = document.getElementById(id);
@@ -90,40 +83,12 @@ function SectionShell({ id, eyebrow, children, className = "" }) {
 }
 
 function HeroTitle() {
-  const [roleIndex, setRoleIndex] = useState(0);
-  const roleTitleSize = "clamp(3rem, min(6.8vw, 9vh), 6.4rem)";
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setRoleIndex((current) => (current + 1) % heroRoles.length);
-    }, 3200);
-
-    return () => window.clearInterval(timer);
-  }, []);
-
   return (
-    <h1
-      className="relative max-w-5xl font-black uppercase leading-[0.86] tracking-normal text-white"
-      style={{
-        fontSize: roleTitleSize,
-        minHeight: "2.86em",
-      }}
-    >
-      <AnimatePresence mode="wait">
-        <motion.span
-          key={roleIndex}
-          className="absolute inset-0 block"
-          initial={{ opacity: 0, y: 34, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          exit={{ opacity: 0, y: -34, filter: "blur(8px)" }}
-          transition={{ duration: 0.48, ease: "easeOut" }}
-        >
-          {heroRoles[roleIndex][0]}
-          <span className="block text-transparent [-webkit-text-stroke:1px_rgba(244,247,250,0.92)]">
-            {heroRoles[roleIndex][1]}
-          </span>
-        </motion.span>
-      </AnimatePresence>
+    <h1 className="max-w-5xl text-[clamp(3.6rem,7.8vw,8.2rem)] font-black leading-[0.84] tracking-[-0.065em] text-[var(--text-primary)]">
+      Product designer
+      <span className="block font-black tracking-[-0.055em] text-[var(--accent-secondary)]">
+        who builds.
+      </span>
     </h1>
   );
 }
@@ -150,7 +115,7 @@ function LiveClock() {
   }, []);
 
   return (
-    <div className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2">
+    <div className="absolute bottom-4 left-1/2 z-20 hidden -translate-x-1/2">
       <motion.div
         className="flex items-center gap-2 rounded-full border border-cyan-200/12 bg-black/24 px-3 py-2 text-[10px] font-bold text-cyan-50/90 shadow-[0_0_24px_rgba(53,214,255,0.08)] backdrop-blur-md"
         initial={{ opacity: 0, y: 8 }}
@@ -309,10 +274,10 @@ function SpiderHeroArt({ weather }) {
 
   return (
     <motion.div
-      className="group relative min-h-[650px] overflow-hidden rounded-[30px] border border-cyan-100/10 bg-[#03080b]/88 shadow-[0_34px_120px_rgba(0,0,0,0.48)] sm:min-h-[620px] xl:min-h-[680px]"
+      className="group relative min-h-[540px] overflow-hidden rounded-[32px] border border-[var(--border-primary)] bg-[var(--bg-secondary)] shadow-[0_34px_120px_rgba(0,0,0,0.3)] sm:min-h-[590px]"
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      aria-label="Interactive Spider-Verse inspired hero artwork"
+      aria-label="Interactive HV typographic identity"
     >
       <motion.div
         className="pointer-events-none absolute h-80 w-80 rounded-full bg-cyan-300/18 blur-3xl"
@@ -353,7 +318,7 @@ function SpiderHeroArt({ weather }) {
       />
       <div className="spider-noise absolute inset-0 opacity-45" />
 
-      <motion.div className="absolute inset-0" style={{ x: cardX, y: cardY }}>
+      <motion.div className="absolute inset-0 hidden" style={{ x: cardX, y: cardY }}>
         <FloatingCard
           className="left-3 top-4 w-[calc(50%-1rem)] sm:left-5 sm:top-6 sm:w-48"
           icon={FiRadio}
@@ -476,19 +441,36 @@ function SpiderHeroArt({ weather }) {
             transition={{ duration: 8.5, repeat: Infinity, ease: "easeInOut" }}
             whileHover={reduceMotion ? undefined : { scale: 1.035, rotate: 0 }}
           >
-            <div className="absolute inset-8 rounded-full bg-cyan-300/18 blur-3xl" />
-            <div className="absolute inset-10 rounded-full bg-red-500/12 blur-2xl" />
-            <Image
-              src="/images/spiderverse.png"
-              alt="Original stylized spider emblem"
-              fill
-              priority
-              sizes="(min-width: 1024px) 320px, 70vw"
-              className="object-contain drop-shadow-[0_0_24px_rgba(53,214,255,0.55)]"
+            <div className="absolute inset-6 rounded-full bg-[var(--accent-secondary)]/10 blur-3xl" />
+            <div
+              className="absolute left-1/2 top-1/2 h-[78%] w-px -translate-x-1/2 -translate-y-1/2 bg-white/10"
+              aria-hidden
             />
+            <div
+              className="absolute left-1/2 top-1/2 h-px w-[88%] -translate-x-1/2 -translate-y-1/2 bg-white/10"
+              aria-hidden
+            />
+            <div className="relative flex h-full items-center justify-center" aria-label="HV monogram">
+              <span className="absolute -translate-x-[24%] -translate-y-[5%] text-[11.5rem] font-black leading-none tracking-[-0.14em] text-[var(--text-primary)] sm:text-[13.5rem]">
+                H
+              </span>
+              <span className="absolute translate-x-[27%] translate-y-[7%] text-[13rem] font-black leading-none tracking-[-0.12em] text-[var(--accent-secondary)] sm:text-[15.5rem]">
+                V
+              </span>
+              <span className="absolute bottom-4 right-1 font-mono text-[9px] uppercase tracking-[0.22em] text-[var(--text-muted)]">
+                HV / 2026
+              </span>
+            </div>
           </motion.div>
         </div>
       </motion.div>
+
+      <div className="absolute inset-x-6 bottom-6 z-30 flex items-end justify-between border-t border-white/10 pt-4 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]">
+        <span>Research · Design · Build</span>
+        <span className="text-base normal-case font-semibold tracking-normal text-[var(--text-primary)]">
+          Make it useful.
+        </span>
+      </div>
 
       <LiveClock />
     </motion.div>
@@ -669,7 +651,7 @@ function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-[28px] border border-white/10 bg-white/[0.025] p-5 shadow-[0_24px_90px_rgba(0,0,0,0.28)] backdrop-blur-xl sm:p-8"
+      className="rounded-[28px] border border-[var(--border-primary)] bg-white/[0.018] p-5 shadow-[0_24px_90px_rgba(0,0,0,0.24)] backdrop-blur-xl sm:p-8"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
@@ -699,7 +681,7 @@ function ContactForm() {
         <p className="mt-5 text-sm font-medium text-red-300">Something went wrong. Email me directly instead.</p>
       )}
 
-      <button type="submit" disabled={isSubmitting} className="mt-7 inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full border border-cyan-200/30 bg-cyan-200/10 px-5 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-50">
+      <button type="submit" disabled={isSubmitting} className="mt-7 inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full bg-[var(--text-primary)] px-5 text-sm font-bold text-[var(--bg-primary)] transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50">
         {isSubmitting ? "Sending..." : "Send message"}
         <FiSend aria-hidden />
       </button>
@@ -772,8 +754,8 @@ export default function Home() {
   }
 
   return (
-    <main className="relative overflow-x-hidden bg-[#050608]">
-      <div className="pointer-events-none fixed inset-0 z-0 opacity-80">
+    <main className="relative overflow-x-hidden bg-[var(--bg-primary)]">
+      <div className="pointer-events-none fixed inset-0 z-0 opacity-60">
         <div className="studio-grid absolute inset-0" />
         <div className="studio-cursor-glow absolute inset-[-10%]" />
         <div className="spider-noise absolute inset-0 opacity-35" />
@@ -797,59 +779,62 @@ export default function Home() {
           className="relative flex min-h-screen scroll-mt-24 items-center pb-16 pt-28"
         >
           <PageContainer>
-            <div className="grid items-center gap-10 xl:grid-cols-[minmax(0,0.95fr)_minmax(460px,0.88fr)] 2xl:grid-cols-[minmax(0,0.9fr)_minmax(560px,0.88fr)]">
-              <div>
-                <p className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-[var(--accent-secondary)]">
-                  Designing, researching &amp; building digital products.
+            <div className="flex min-h-[calc(100vh-11rem)] items-center">
+              <div className="w-full max-w-6xl">
+                <p className="mb-7 text-xs font-bold uppercase tracking-[0.22em] text-[var(--accent-secondary)]">
+                  Hrishikesh Varma · Dublin, Ireland
                 </p>
                 <HeroTitle />
-                <p className="mt-8 max-w-2xl text-lg leading-8 text-[var(--text-secondary)]">
-                  I&apos;m Hrishikesh Varma, a Dublin-based UX/UI designer,
-                  researcher, and frontend developer. I combine user insight,
-                  thoughtful interface design, and technical understanding to
-                  create useful web and mobile experiences.
+                <p className="mt-9 max-w-2xl text-lg leading-8 text-[var(--text-secondary)] sm:text-xl sm:leading-9">
+                  I turn user insight into clear, useful digital products—and
+                  bring enough frontend knowledge to design with the real build
+                  in mind.
                 </p>
-                <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+                <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
                   <button
                     type="button"
-                    onClick={() => scrollToSection("contact")}
-                    className="group relative inline-flex min-h-[3.35rem] items-center justify-center overflow-hidden rounded-full border border-cyan-200/30 bg-cyan-200/10 px-5 text-sm font-bold text-white shadow-[0_0_32px_rgba(53,214,255,0.14)]"
+                    onClick={() => scrollToSection("projects")}
+                    className="group inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full bg-[var(--text-primary)] px-5 text-sm font-bold text-[#0b0c0b] transition-transform hover:-translate-y-0.5"
                   >
-                    <span className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-[radial-gradient(circle_at_50%_0%,rgba(77,255,181,0.18),transparent_55%)]" />
-                    <span className="relative flex items-center gap-2">
-                      Let&apos;s talk
-                      <FiArrowUpRight />
-                    </span>
+                    View selected work
+                    <FiArrowUpRight aria-hidden />
                   </button>
-                  <div className="flex items-center gap-2 text-sm font-semibold text-cyan-50/90">
-                    <span className="h-2.5 w-2.5 rounded-full bg-white shadow-[0_0_14px_rgba(77,255,181,0.8)]" />
+                  <a
+                    href="/resume/Hrishi_CV.pdf"
+                    download
+                    className="inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full border border-[var(--border-secondary)] px-5 text-sm font-bold text-[var(--text-primary)] transition-colors hover:bg-white/[0.05]"
+                  >
+                    Download résumé
+                    <FiDownload aria-hidden />
+                  </a>
+                </div>
+                <div className="mt-7 flex items-center gap-2 text-sm font-semibold text-[var(--text-secondary)]">
+                    <span className="h-2 w-2 rounded-full bg-[var(--accent-secondary)] shadow-[0_0_14px_rgba(185,246,210,0.55)]" />
                     Available for full-time opportunities
-                  </div>
                 </div>
               </div>
 
-              <div>
-                <HeroVisual />
-              </div>
             </div>
           </PageContainer>
         </section>
 
         <SectionShell id="about" eyebrow="About">
-          <div className="space-y-14 border-t border-white/10 pt-9">
-            <div className="grid gap-10 lg:grid-cols-[0.42fr_0.58fr]">
+          <div className="space-y-14 border-t border-[var(--border-primary)] pt-9">
+            <div className="grid gap-10 lg:grid-cols-[0.38fr_0.62fr]">
               <div>
-                <p className="text-[clamp(1.75rem,3.1vw,2.8rem)] font-black leading-none tracking-[-0.025em] text-white">
-                  Hi, I&apos;m Hrishi.
+                <p className="text-[clamp(1.75rem,3.1vw,2.8rem)] font-black leading-none tracking-[-0.035em] text-[var(--text-primary)]">
+                  Curious about people.
+                  <span className="mt-2 block font-black text-[var(--accent-secondary)]">
+                    Practical about making.
+                  </span>
                 </p>
                 <div className="mt-6 flex flex-wrap gap-2">
                   <span className="studio-pill gap-2">
                     <FiMapPin aria-hidden />
                     Dublin / Remote / Hybrid
                   </span>
-                  <span className="studio-pill">Around 3 years</span>
                   <span className="studio-pill">
-                    Creative Digital Media & UX
+                    MSc Creative Digital Media &amp; UX
                   </span>
                 </div>
                 <div className="mt-5">
@@ -866,26 +851,72 @@ export default function Home() {
               </div>
               <div className="space-y-5 text-lg leading-8 text-[var(--text-secondary)]">
                 <p>
-                  I work across UX/UI design, user research, and frontend
-                  development, bringing these disciplines together throughout
-                  the product process.
+                  I&apos;m Hrishi, a product designer who likes understanding
+                  why something is difficult before deciding what it should
+                  look like. I care about clear journeys, useful details and
+                  interfaces that feel considered without feeling complicated.
                 </p>
                 <p>
-                  My approach begins with understanding users and defining the
-                  right problem. I translate those insights into user flows,
-                  prototypes, accessible interfaces, and production-ready
-                  experiences. My development background helps me design with
-                  technical constraints in mind and collaborate closely with
-                  engineering teams.
+                  My background in frontend development keeps my design work
+                  grounded in real constraints. It helps me collaborate closely
+                  with engineers, question ideas early and carry decisions from
+                  research through to a working experience.
+                </p>
+                <p className="text-sm leading-7 text-[var(--text-muted)]">
+                  Around three years of professional frontend experience.
+                  Currently completing an MSc in Creative Digital Media &amp; UX
+                  at TU Dublin.
                 </p>
               </div>
             </div>
 
+            <div className="border-t border-[var(--border-primary)] pt-9">
+              <p className="mb-7 text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]">
+                How I work
+              </p>
+              <div className="grid gap-px overflow-hidden rounded-[28px] border border-[var(--border-primary)] bg-[var(--border-primary)] lg:grid-cols-3">
+                {[
+                  {
+                    number: "01",
+                    title: "Understand",
+                    copy: "Start with people, context and the real problem—not assumptions about what the interface should be.",
+                  },
+                  {
+                    number: "02",
+                    title: "Shape",
+                    copy: "Turn evidence into focused journeys, prototypes and design decisions that make the product easier to understand.",
+                  },
+                  {
+                    number: "03",
+                    title: "Make",
+                    copy: "Bring the idea to a polished, practical outcome while staying close to implementation and real constraints.",
+                  },
+                ].map((item) => (
+                  <article
+                    key={item.number}
+                    className="min-h-[250px] bg-[var(--bg-primary)] p-7 sm:p-9"
+                  >
+                    <p className="font-mono text-xs text-[var(--accent-secondary)]">
+                      {item.number}
+                    </p>
+                    <h3 className="mt-14 text-2xl font-black tracking-[-0.03em] text-[var(--text-primary)]">
+                      {item.title}
+                    </h3>
+                    <p className="mt-4 max-w-sm text-sm leading-7 text-[var(--text-secondary)]">
+                      {item.copy}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            </div>
           </div>
         </SectionShell>
 
         <SectionShell id="projects" eyebrow="Selected projects">
-          <div className="-mx-3 flex snap-x snap-mandatory gap-4 overflow-x-auto border-t border-white/10 px-3 pb-4 pt-9 sm:-mx-4 sm:px-4 md:-mx-6 md:px-6 lg:-mx-8 lg:px-8">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-[var(--text-muted)] xl:hidden">
+            Swipe to explore
+          </p>
+          <div className="-mx-3 flex snap-x snap-mandatory gap-4 overflow-x-auto border-t border-[var(--border-primary)] px-3 pb-4 pt-9 sm:-mx-4 sm:px-4 md:-mx-6 md:px-6 lg:-mx-8 lg:px-8">
             {selectedProjects.slice(0, 3).map((project, index) => (
               <motion.article
                 key={project.id}
@@ -906,19 +937,21 @@ export default function Home() {
                 <ProjectTransitionLink
                   href={`/projects/${project.id}`}
                   label={`Opening ${getProjectName(project.title)} case study`}
-                  className="flex h-full flex-col rounded-[28px] border border-white/10 bg-white/[0.025] p-4 transition-colors duration-300 hover:border-cyan-200/25 hover:bg-white/[0.045] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/60"
+                  className="flex h-full flex-col rounded-[28px] border border-[var(--border-primary)] bg-white/[0.018] p-4 transition-colors duration-300 hover:border-[var(--border-secondary)] hover:bg-white/[0.035] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-secondary)]"
                 >
                   <div className="flex h-[116px] items-start justify-between gap-4 px-1 pb-4 pt-1">
                     <div className="min-w-0">
-                      <h3 className="line-clamp-2 text-[1.65rem] font-black leading-[0.95] tracking-[-0.035em] text-white transition-colors group-hover:text-cyan-100">
+                      <h3 className="line-clamp-2 text-[1.65rem] font-black leading-[0.95] tracking-[-0.035em] text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent-secondary)]">
                         {getProjectName(project.title)}
                       </h3>
                       <p className="mt-2 line-clamp-2 text-sm font-semibold leading-5 text-[var(--text-secondary)]">
-                        {getProjectDescriptor(project.title) || project.summary}
+                        {project.cardImpact ||
+                          getProjectDescriptor(project.title) ||
+                          project.summary}
                       </p>
                     </div>
                     <span
-                      className="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.035] text-white transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                      className="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--border-primary)] bg-white/[0.035] text-[var(--text-primary)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                       aria-hidden
                     >
                       <FiArrowUpRight />
@@ -926,7 +959,7 @@ export default function Home() {
                   </div>
 
                   <motion.div
-                    className="relative min-h-0 flex-1 overflow-hidden rounded-[20px] border border-white/10 bg-black/30"
+                    className="relative min-h-0 flex-1 overflow-hidden rounded-[20px] border border-[var(--border-primary)] bg-[var(--bg-secondary)]"
                     whileHover={reduceMotion ? undefined : { y: -4 }}
                     transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                   >
@@ -945,10 +978,10 @@ export default function Home() {
                     ) : null}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
                     <div className="absolute inset-x-3 bottom-3 flex items-end justify-between gap-3">
-                      <span className="rounded-full border border-white/15 bg-[#07090c]/85 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.15em] text-cyan-50 backdrop-blur-md">
-                        {project.category}
+                      <span className="rounded-full border border-[var(--border-secondary)] bg-[var(--bg-primary)]/85 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.15em] text-[var(--text-primary)] backdrop-blur-md">
+                        {project.cardCategory || project.category}
                       </span>
-                      <span className="font-mono text-xs font-bold text-white/70">
+                      <span className="font-mono text-xs font-bold text-[var(--text-secondary)]">
                         {project.year}
                       </span>
                     </div>
@@ -964,16 +997,16 @@ export default function Home() {
 
             <Link
               href="/projects"
-              className="group flex h-[360px] w-[280px] shrink-0 snap-start flex-col justify-between rounded-[28px] border border-cyan-200/20 bg-cyan-200/[0.055] p-6 transition-colors hover:border-cyan-200/40 hover:bg-cyan-200/[0.09] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/60 sm:w-[300px] xl:w-[calc(25%-0.75rem)]"
+              className="group flex h-[360px] w-[280px] shrink-0 snap-start flex-col justify-between rounded-[28px] border border-[var(--border-secondary)] bg-white/[0.025] p-6 transition-colors hover:bg-white/[0.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-secondary)] sm:w-[300px] xl:w-[calc(25%-0.75rem)]"
             >
               <span className="page-eyebrow text-[var(--accent-secondary)]">
                 Full archive
               </span>
               <div>
-                <span className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full border border-cyan-100/20 bg-cyan-100/10 text-xl text-white transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1">
+                <span className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border-primary)] bg-white/[0.035] text-xl text-[var(--text-primary)] transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1">
                   <FiArrowUpRight aria-hidden />
                 </span>
-                <h3 className="text-3xl font-black leading-none tracking-[-0.035em] text-white">
+                <h3 className="text-3xl font-black leading-none tracking-[-0.035em] text-[var(--text-primary)]">
                   View all projects
                 </h3>
                 <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">
@@ -985,7 +1018,7 @@ export default function Home() {
         </SectionShell>
 
         <SectionShell id="contact" eyebrow="Contact">
-          <div className="grid gap-10 border-t border-white/10 pt-9 lg:grid-cols-[0.38fr_0.62fr]">
+          <div className="grid gap-10 border-t border-[var(--border-primary)] pt-9 lg:grid-cols-[0.38fr_0.62fr]">
             <aside className="space-y-8">
               <p className="text-lg leading-8 text-[var(--text-secondary)]">
                 I&apos;m open to UX/UI design, UX research, frontend development,
@@ -994,9 +1027,9 @@ export default function Home() {
               <div className="space-y-3">
                 <a
                   href="mailto:officialhrishivuk@gmail.com"
-                  className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.025] p-4"
+                  className="group flex items-center justify-between rounded-2xl border border-[var(--border-primary)] bg-white/[0.018] p-4 transition-colors hover:border-[var(--border-secondary)] hover:bg-white/[0.035]"
                 >
-                  <span className="inline-flex items-center gap-3 text-sm font-semibold text-white">
+                  <span className="inline-flex items-center gap-3 text-sm font-semibold text-[var(--text-primary)]">
                     <FiMail aria-hidden />
                     Email
                   </span>
@@ -1006,9 +1039,9 @@ export default function Home() {
                   href="https://www.linkedin.com/in/hrishivuk/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.025] p-4"
+                  className="group flex items-center justify-between rounded-2xl border border-[var(--border-primary)] bg-white/[0.018] p-4 transition-colors hover:border-[var(--border-secondary)] hover:bg-white/[0.035]"
                 >
-                  <span className="inline-flex items-center gap-3 text-sm font-semibold text-white">
+                  <span className="inline-flex items-center gap-3 text-sm font-semibold text-[var(--text-primary)]">
                     <FiLinkedin aria-hidden />
                     LinkedIn
                   </span>
@@ -1018,9 +1051,9 @@ export default function Home() {
                   href="https://github.com/hrishivuk"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.025] p-4"
+                  className="group flex items-center justify-between rounded-2xl border border-[var(--border-primary)] bg-white/[0.018] p-4 transition-colors hover:border-[var(--border-secondary)] hover:bg-white/[0.035]"
                 >
-                  <span className="inline-flex items-center gap-3 text-sm font-semibold text-white">
+                  <span className="inline-flex items-center gap-3 text-sm font-semibold text-[var(--text-primary)]">
                     <FiGithub aria-hidden />
                     GitHub
                   </span>

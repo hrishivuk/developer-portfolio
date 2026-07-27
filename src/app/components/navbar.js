@@ -1,94 +1,103 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "motion/react";
 import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
-import { useLayout } from "../contexts/LayoutContext";
 
-const defaultSections = [
-  { id: "home", label: "Home" },
+const primarySections = [
   { id: "about", label: "About" },
-  { id: "skills", label: "Skills" },
-  { id: "experience", label: "Experience" },
   { id: "projects", label: "Projects" },
   { id: "contact", label: "Contact" },
 ];
 
 export default function Navbar({
-  activeSection = "home",
-  sections = defaultSections,
+  activeSection = "",
   onNavigate,
 }) {
-  const { maxWidth } = useLayout();
   const [isOpen, setIsOpen] = useState(false);
+  const isHome = Boolean(onNavigate);
 
-  function navigate(id) {
+  function navigateHome(id) {
     setIsOpen(false);
-
-    if (onNavigate) {
-      onNavigate(id);
-      return;
-    }
-
-    const node = document.getElementById(id);
-    if (node) node.scrollIntoView({ behavior: "smooth", block: "start" });
+    onNavigate?.(id);
   }
+
+  const brand = isHome ? (
+    <button
+      type="button"
+      className="text-sm font-semibold tracking-normal text-[var(--text-primary)]"
+      onClick={() => navigateHome("home")}
+    >
+      hrishi.
+    </button>
+  ) : (
+    <Link
+      href="/"
+      className="text-sm font-semibold tracking-normal text-[var(--text-primary)]"
+    >
+      hrishi.
+    </Link>
+  );
 
   return (
     <>
-      <header className="fixed left-0 right-0 top-4 z-50 px-3 sm:px-4">
+      <header className="fixed inset-x-0 top-4 z-50 px-2 sm:px-3 md:px-4">
         <nav
-          className="mx-auto flex min-h-[56px] items-center justify-between rounded-full border px-4 backdrop-blur-xl sm:px-5"
+          className="mx-auto grid min-h-[56px] w-full max-w-full grid-cols-[1fr_auto] items-center rounded-full border px-4 backdrop-blur-xl sm:px-5 md:max-w-[800px] lg:max-w-[1000px] xl:max-w-[1320px] 2xl:max-w-[1560px] min-[1920px]:max-w-[1760px]"
           style={{
-            maxWidth,
             backgroundColor:
-              "color-mix(in srgb, var(--bg-primary) 72%, transparent)",
+              "color-mix(in srgb, var(--bg-primary) 82%, transparent)",
             borderColor: "var(--border-primary)",
             color: "var(--text-primary)",
           }}
           aria-label="Primary navigation"
         >
-          <button
-            type="button"
-            className="text-sm font-semibold tracking-normal text-[var(--text-primary)]"
-            onClick={() => navigate("home")}
-          >
-            hrishi.
-          </button>
+          <div className="flex items-center">{brand}</div>
 
-          <div className="hidden items-center gap-1 lg:flex">
-            {sections.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => navigate(item.id)}
-                className="relative rounded-full px-4 py-2 text-sm font-medium"
-                style={{
-                  color:
+          <div className="hidden items-center justify-end gap-1 lg:flex">
+            {primarySections.map((item) =>
+              isHome ? (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => navigateHome(item.id)}
+                  className="relative rounded-full px-4 py-2 text-sm font-medium"
+                  style={{
+                    color:
+                      activeSection === item.id
+                        ? "var(--text-primary)"
+                        : "var(--text-muted)",
+                  }}
+                >
+                  {activeSection === item.id ? (
+                    <motion.span
+                      layoutId="navbar-active-pill"
+                      className="absolute inset-0 rounded-full bg-white/[0.065]"
+                      transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                    />
+                  ) : null}
+                  <span className="relative z-10">{item.label}</span>
+                </button>
+              ) : (
+                <Link
+                  key={item.id}
+                  href={`/#${item.id}`}
+                  className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                     activeSection === item.id
-                      ? "var(--text-primary)"
-                      : "var(--text-muted)",
-                }}
-              >
-                {activeSection === item.id ? (
-                  <motion.span
-                    layoutId="navbar-active-pill"
-                    className="absolute inset-0 rounded-full bg-white/[0.06]"
-                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
-                  />
-                ) : null}
-                <span className="relative z-10">{item.label}</span>
-              </button>
-            ))}
+                      ? "bg-white/[0.065] text-[var(--text-primary)]"
+                      : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ),
+            )}
           </div>
 
           <button
             type="button"
-            className="inline-flex min-h-[40px] min-w-[40px] items-center justify-center rounded-full border hover:border-cyan-200/40 hover:text-white lg:hidden"
-            style={{
-              borderColor: "var(--border-primary)",
-              color: "var(--text-primary)",
-            }}
+            className="inline-flex min-h-10 min-w-10 items-center justify-center justify-self-end rounded-full border border-[var(--border-primary)] text-[var(--text-primary)] transition-colors hover:border-[var(--border-secondary)] hover:bg-white/[0.05] lg:hidden"
             onClick={() => setIsOpen((current) => !current)}
             aria-label="Toggle navigation menu"
             aria-expanded={isOpen}
@@ -98,48 +107,43 @@ export default function Navbar({
         </nav>
       </header>
 
-      {isOpen && (
-        <div className="fixed inset-0 z-40 bg-[#050608]/96 px-4 pt-24 backdrop-blur-xl">
+      {isOpen ? (
+        <div className="fixed inset-0 z-40 bg-[var(--bg-primary)]/96 px-4 pt-24 backdrop-blur-xl lg:hidden">
           <nav
             className="mx-auto flex max-w-xl flex-col gap-3"
-            aria-label="Menu navigation"
+            aria-label="Mobile navigation"
           >
-            {sections.map((item, index) => (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => navigate(item.id)}
-                className="group relative flex min-h-[68px] items-center justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025] px-5 text-left text-2xl font-black text-white hover:border-cyan-200/30"
-              >
-                {activeSection === item.id ? (
-                  <motion.span
-                    layoutId="navbar-mobile-active-pill"
-                    className="absolute inset-0 rounded-2xl bg-white/[0.06]"
-                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
-                  />
-                ) : null}
-                <span className="relative z-10">{item.label}</span>
-                <span
-                  className={`relative z-10 font-mono text-sm ${
-                    activeSection === item.id
-                      ? "text-[var(--accent-secondary)]"
-                      : "text-[var(--text-muted)]"
-                  }`}
+            {primarySections.map((item, index) =>
+              isHome ? (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => navigateHome(item.id)}
+                  className="flex min-h-[64px] items-center justify-between rounded-2xl border border-[var(--border-primary)] bg-white/[0.025] px-5 text-left text-xl font-black text-[var(--text-primary)]"
                 >
-                  0{index + 1}
-                </span>
-              </button>
-            ))}
-            <a
-              href="mailto:officialhrishivuk@gmail.com"
-              onClick={() => setIsOpen(false)}
-              className="mt-4 flex min-h-[56px] items-center justify-center rounded-full border border-cyan-200/25 text-sm font-bold text-white"
-            >
-              Let&apos;s talk
-            </a>
+                  {item.label}
+                  <span className="font-mono text-xs text-[var(--text-muted)]">
+                    0{index + 1}
+                  </span>
+                </button>
+              ) : (
+                <Link
+                  key={item.id}
+                  href={`/#${item.id}`}
+                  onClick={() => setIsOpen(false)}
+                  className="flex min-h-[64px] items-center justify-between rounded-2xl border border-[var(--border-primary)] bg-white/[0.025] px-5 text-xl font-black text-[var(--text-primary)]"
+                >
+                  {item.label}
+                  <span className="font-mono text-xs text-[var(--text-muted)]">
+                    0{index + 1}
+                  </span>
+                </Link>
+              ),
+            )}
+
           </nav>
         </div>
-      )}
+      ) : null}
     </>
   );
 }

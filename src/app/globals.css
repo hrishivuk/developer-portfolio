@@ -6,19 +6,19 @@
 
 /* Default tokens — product studio dark (overridden by ThemeContext when needed) */
 :root {
-  --bg-primary: #060708;
-  --bg-secondary: #101214;
-  --bg-tertiary: #171a1d;
-  --text-primary: #f4f7fa;
-  --text-secondary: #dde5ec;
-  --text-muted: #cbd5df;
-  --accent-primary: #35d6ff;
-  --accent-secondary: #4dffb5;
-  --border-primary: rgba(255, 255, 255, 0.08);
-  --border-secondary: rgba(255, 255, 255, 0.14);
-  --mesh-1: rgba(53, 214, 255, 0.32);
-  --mesh-2: rgba(77, 255, 181, 0.18);
-  --mesh-3: rgba(255, 255, 255, 0.08);
+  --bg-primary: #0b0c0b;
+  --bg-secondary: #121411;
+  --bg-tertiary: #1a1d19;
+  --text-primary: #f1efe8;
+  --text-secondary: #c5c4bc;
+  --text-muted: #8c8e87;
+  --accent-primary: #b9f6d2;
+  --accent-secondary: #b9f6d2;
+  --border-primary: rgba(241, 239, 232, 0.1);
+  --border-secondary: rgba(241, 239, 232, 0.2);
+  --mesh-1: rgba(185, 246, 210, 0.13);
+  --mesh-2: rgba(241, 239, 232, 0.07);
+  --mesh-3: rgba(141, 82, 255, 0.07);
 }
 
 /* Ambient mesh + grain */
@@ -241,17 +241,17 @@ body {
 
 .studio-grid {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(circle at 50% 38%, black 0%, transparent 68%);
+    linear-gradient(rgba(241, 239, 232, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(241, 239, 232, 0.025) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at 50% 25%, black 0%, transparent 72%);
 }
 
 .studio-cursor-glow {
   background:
-    radial-gradient(circle at 50% 40%, rgba(53, 214, 255, 0.18), transparent 34%),
-    radial-gradient(circle at 70% 62%, rgba(77, 255, 181, 0.12), transparent 28%);
-  filter: blur(8px);
+    radial-gradient(circle at 72% 14%, rgba(185, 246, 210, 0.08), transparent 28%),
+    radial-gradient(circle at 12% 70%, rgba(141, 82, 255, 0.045), transparent 24%);
+  filter: blur(20px);
 }
 
 .studio-surface {
@@ -602,143 +602,21 @@ body {
   }
 }
 
-/* Hide Scrollbars */
 html {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-}
-
-html::-webkit-scrollbar {
-  display: none; /* WebKit browsers (Chrome, Safari, Edge) */
-}
-
-body {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-color: var(--text-muted) var(--bg-primary);
+  scrollbar-width: thin;
 }
 
 body::-webkit-scrollbar {
-  display: none; /* WebKit browsers (Chrome, Safari, Edge) */
+  width: 10px;
 }
 
-/* Hide scrollbars for all elements */
-* {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
+body::-webkit-scrollbar-track {
+  background: var(--bg-primary);
 }
 
-*::-webkit-scrollbar {
-  display: none; /* WebKit browsers (Chrome, Safari, Edge) */
-}
-
-.role-text {
-  display: inline-block;
-}
-
-/* Custom Scroll Indicator */
-.scroll-indicator {
-  position: relative;
-  display: inline-block;
-}
-
-.scroll-indicator::after {
-  content: "";
-  position: absolute;
-  bottom: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1px;
-  height: 30px;
-  background-color: var(--text-primary);
-}
-
-/* Responsive typography */
-@media (max-width: 768px) {
-  .Typewriter {
-    font-size: 40px !important;
-  }
-}
-
-#eyes {
-  position: absolute;
-  top: 50%;
-  left: 16%;
-  transform: translateY(-90px);
-  width: 100%;
-  text-align: center;
-  z-index: 1000;
-}
-
-.eye {
-  width: 36px;
-  height: 36px;
-  background: #1d1e1c;
-  display: inline-block;
-  margin: 32px;
-  border-radius: 50%;
-  position: relative;
-  overflow: hidden;
-}
-
-.ball {
-  width: 12px;
-  height: 12px;
-  background: #fff4e8;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-}
-
-/* Center the SVG */
-.visage {
-  height: 100%;
-  width: 100%;
-  z-index: 999;
-}
-
-/* Style for the face */
-.cls-1 {
-  fill: #4b3de3;
-}
-
-.cls-2 {
-  fill: #000000;
-}
-
-.cls-3 {
-  fill: #f29655;
-}
-
-.cls-4 {
-  fill: #fcd4a4;
-}
-
-.cls-5 {
-  fill: #fff4e8;
-}
-
-.cls-6 {
-  fill: #70141b;
-}
-
-.cls-7 {
-  fill: #4b3de3;
-}
-
-.cls-8 {
-  fill: #fcd4a4;
-}
-
-.lh-normal {
-  line-height: normal;
-}
-.Typewriter {
-  font-size: 64px;
-  font-family: "Inter", sans-serif !important;
-}
-/* Custom radial gradient utility */
-.bg-gradient-radial {
-  background: radial-gradient(circle, var(--tw-gradient-stops));
+body::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border: 3px solid var(--bg-primary);
+  border-radius: 999px;
 }
