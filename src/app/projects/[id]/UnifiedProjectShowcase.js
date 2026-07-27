@@ -60,8 +60,10 @@ function ActionLink({
   );
 }
 
-export default function UnifiedProjectShowcase({ project }) {
+export default function UnifiedProjectShowcase({ project, backHref = "/projects" }) {
   const projectName = getProjectName(project.title);
+  const backLabel =
+    backHref === "/#projects" ? "Back to selected projects" : "All projects";
   const caseStudies = project.documentLinks?.filter((link) =>
     /case study/i.test(link.title || ""),
   ) || [];
@@ -92,11 +94,11 @@ export default function UnifiedProjectShowcase({ project }) {
         <article className="w-full">
           <div className="pt-8 sm:pt-12">
             <Link
-              href="/projects"
+              href={backHref}
               className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[var(--border-primary)] bg-white/[0.018] px-4 text-xs font-bold text-[var(--text-secondary)] transition-colors hover:border-[var(--border-secondary)] hover:bg-white/[0.04] hover:text-[var(--text-primary)]"
             >
               <FiArrowLeft aria-hidden />
-              All projects
+              {backLabel}
             </Link>
           </div>
 
@@ -218,10 +220,10 @@ export default function UnifiedProjectShowcase({ project }) {
 
           <footer className="flex flex-col gap-5 py-10 sm:flex-row sm:items-center sm:justify-between">
             <Link
-              href="/projects"
+              href={backHref}
               className="inline-flex items-center gap-2 text-sm font-bold text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
             >
-              Back to projects
+              {backLabel}
               <FiArrowUpRight aria-hidden />
             </Link>
             <div className="flex flex-wrap gap-3">

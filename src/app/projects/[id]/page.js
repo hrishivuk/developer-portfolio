@@ -27,15 +27,26 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function ProjectDetailPage({ params }) {
+export default async function ProjectDetailPage({ params, searchParams }) {
   const { id } = await params;
+  const { from } = (await searchParams) || {};
   const project = getProjectById(id);
 
   if (!project) notFound();
 
   if (project.workInProgress) {
-    return <FlexSaveWipShowcase project={project} />;
+    return (
+      <FlexSaveWipShowcase
+        project={project}
+        backHref={from === "home" ? "/#projects" : "/projects"}
+      />
+    );
   }
 
-  return <UnifiedProjectShowcase project={project} />;
+  return (
+    <UnifiedProjectShowcase
+      project={project}
+      backHref={from === "home" ? "/#projects" : "/projects"}
+    />
+  );
 }

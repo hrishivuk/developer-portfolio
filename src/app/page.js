@@ -16,7 +16,6 @@ import {
   FiArrowUpRight,
   FiClock,
   FiCloud,
-  FiDownload,
   FiGithub,
   FiLinkedin,
   FiMail,
@@ -28,6 +27,7 @@ import {
 import Navbar from "./components/navbar";
 import PageContainer from "./components/PageContainer";
 import ProjectTransitionLink from "./components/ProjectTransitionLink";
+import ResumeDownloadButton from "./components/ResumeDownloadButton";
 import { getSortedProjects, projects } from "../data/projects";
 
 const navSections = [
@@ -780,7 +780,7 @@ export default function Home() {
         >
           <PageContainer>
             <div className="flex min-h-[calc(100vh-11rem)] items-center">
-              <div className="w-full max-w-6xl">
+              <div className="mx-auto w-full max-w-5xl">
                 <p className="mb-7 text-xs font-bold uppercase tracking-[0.22em] text-[var(--accent-secondary)]">
                   Hrishikesh Varma · Dublin, Ireland
                 </p>
@@ -799,14 +799,11 @@ export default function Home() {
                     View selected work
                     <FiArrowUpRight aria-hidden />
                   </button>
-                  <a
-                    href="/resume/Hrishi_CV.pdf"
-                    download
+                  <ResumeDownloadButton
                     className="inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full border border-[var(--border-secondary)] px-5 text-sm font-bold text-[var(--text-primary)] transition-colors hover:bg-white/[0.05]"
                   >
                     Download résumé
-                    <FiDownload aria-hidden />
-                  </a>
+                  </ResumeDownloadButton>
                 </div>
                 <div className="mt-7 flex items-center gap-2 text-sm font-semibold text-[var(--text-secondary)]">
                     <span className="h-2 w-2 rounded-full bg-[var(--accent-secondary)] shadow-[0_0_14px_rgba(185,246,210,0.55)]" />
@@ -838,15 +835,11 @@ export default function Home() {
                   </span>
                 </div>
                 <div className="mt-5">
-                  <a
-                    href="/resume/Hrishi_CV.pdf"
-                    download
+                  <ResumeDownloadButton
                     className="studio-button studio-button-primary shadow-[0_18px_44px_rgba(77,255,181,0.08)] transition-transform hover:-translate-y-0.5"
-                    aria-label="Download Hrishikesh Varma resume PDF"
                   >
-                    <FiDownload aria-hidden />
                     Download Resume
-                  </a>
+                  </ResumeDownloadButton>
                 </div>
               </div>
               <div className="space-y-5 text-lg leading-8 text-[var(--text-secondary)]">
@@ -935,7 +928,7 @@ export default function Home() {
                 }}
               >
                 <ProjectTransitionLink
-                  href={`/projects/${project.id}`}
+                  href={`/projects/${project.id}?from=home`}
                   label={`Opening ${getProjectName(project.title)} case study`}
                   className="flex h-full flex-col rounded-[28px] border border-[var(--border-primary)] bg-white/[0.018] p-4 transition-colors duration-300 hover:border-[var(--border-secondary)] hover:bg-white/[0.035] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-secondary)]"
                 >

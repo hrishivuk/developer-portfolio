@@ -8,8 +8,10 @@ function getProjectName(title) {
   return title.split("–")[0].trim();
 }
 
-export default function FlexSaveWipShowcase({ project }) {
+export default function FlexSaveWipShowcase({ project, backHref = "/projects" }) {
   const projectName = getProjectName(project.title);
+  const backLabel =
+    backHref === "/#projects" ? "Back to selected projects" : "All projects";
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[var(--bg-primary)]">
@@ -24,11 +26,11 @@ export default function FlexSaveWipShowcase({ project }) {
       <PageContainer className="relative z-10 pt-24">
         <section className="w-full py-14">
           <Link
-            href="/projects"
+            href={backHref}
             className="mb-10 inline-flex min-h-11 items-center gap-2 rounded-full border border-[var(--border-primary)] bg-white/[0.018] px-4 text-xs font-bold text-[var(--text-secondary)] transition-colors hover:border-[var(--border-secondary)] hover:bg-white/[0.04] hover:text-[var(--text-primary)]"
           >
             <FiArrowLeft aria-hidden />
-            All projects
+            {backLabel}
           </Link>
           <div className="grid min-h-[calc(100vh-220px)] items-center gap-10 lg:grid-cols-[0.52fr_0.48fr]">
           <div>
@@ -47,7 +49,7 @@ export default function FlexSaveWipShowcase({ project }) {
               story and supporting evidence are ready.
             </p>
             <Link
-              href="/projects"
+              href={backHref}
               className="mt-8 inline-flex min-h-12 items-center gap-2 rounded-full border border-[var(--border-secondary)] px-5 text-sm font-bold text-[var(--text-primary)] transition-colors hover:bg-white/[0.045]"
             >
               Explore finished projects

@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { FiArrowUpRight } from "react-icons/fi";
+import Link from "next/link";
+import { FiArrowLeft, FiArrowUpRight } from "react-icons/fi";
 import Navbar from "../components/navbar";
 import PageContainer from "../components/PageContainer";
 import ProjectTransitionLink from "../components/ProjectTransitionLink";
@@ -34,6 +35,13 @@ export default function ProjectsPage() {
 
       <PageContainer className="relative z-10 pt-20">
         <header className="border-b border-[var(--border-primary)] pb-10 pt-16 sm:pb-14 sm:pt-24">
+          <Link
+            href="/"
+            className="mb-10 inline-flex min-h-11 items-center gap-2 rounded-full border border-[var(--border-primary)] bg-white/[0.018] px-4 text-xs font-bold text-[var(--text-secondary)] transition-colors hover:border-[var(--border-secondary)] hover:bg-white/[0.04] hover:text-[var(--text-primary)]"
+          >
+            <FiArrowLeft aria-hidden />
+            Back home
+          </Link>
           <p className="page-eyebrow text-[var(--accent-secondary)]">
             Project archive
           </p>
@@ -56,7 +64,7 @@ export default function ProjectsPage() {
           {allProjects.map((project) => (
             <article key={project.id} className="group min-w-0">
               <ProjectTransitionLink
-                href={`/projects/${project.id}`}
+                href={`/projects/${project.id}?from=projects`}
                 label={`Opening ${getProjectName(project.title)} case study`}
                 className="flex h-[390px] flex-col rounded-[28px] border border-[var(--border-primary)] bg-white/[0.018] p-4 transition-colors duration-300 hover:border-[var(--border-secondary)] hover:bg-white/[0.035] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-secondary)]"
               >
