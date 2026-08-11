@@ -28,12 +28,13 @@ import Navbar from "./components/navbar";
 import PageContainer from "./components/PageContainer";
 import ProjectTransitionLink from "./components/ProjectTransitionLink";
 import ResumeDownloadButton from "./components/ResumeDownloadButton";
+import SkillsStack from "./components/SkillsStack";
 import { getSortedProjects, projects } from "../data/projects";
 
 const navSections = [
   { id: "home", label: "Home" },
-  { id: "about", label: "About" },
   { id: "projects", label: "Projects" },
+  { id: "about", label: "About" },
   { id: "contact", label: "Contact" },
 ];
 
@@ -63,7 +64,7 @@ function SectionShell({ id, eyebrow, children, className = "" }) {
   return (
     <section
       id={id}
-      className={`relative scroll-mt-24 py-24 sm:py-32 ${className}`}
+      className={`relative scroll-mt-24 py-16 sm:py-24 ${className}`}
     >
       <PageContainer>
         <div>
@@ -84,10 +85,10 @@ function SectionShell({ id, eyebrow, children, className = "" }) {
 
 function HeroTitle() {
   return (
-    <h1 className="max-w-5xl text-[clamp(3.6rem,7.8vw,8.2rem)] font-black leading-[0.84] tracking-[-0.065em] text-[var(--text-primary)]">
-      Product designer
-      <span className="block font-black tracking-[-0.055em] text-[var(--accent-secondary)]">
-        who builds.
+    <h1 className="max-w-6xl text-[clamp(3.15rem,7vw,7.2rem)] font-black leading-[0.88] tracking-[-0.055em] text-[var(--text-primary)]">
+      Frontend developer
+      <span className="mt-2 block font-black tracking-[-0.045em] text-[var(--accent-secondary)]">
+        building full-stack products.
       </span>
     </h1>
   );
@@ -696,10 +697,18 @@ export default function Home() {
   const pendingSectionTimerRef = useRef(null);
 
   const sortedProjects = useMemo(() => getSortedProjects(projects), []);
-  const selectedProjects = useMemo(
-    () => sortedProjects.filter((project) => project.featured),
-    [sortedProjects],
-  );
+  const selectedProjects = useMemo(() => {
+    const priority = [
+      "waypoint-career-intelligence",
+      "findaside-football-planner",
+      "coach-canvas",
+      "portfolio-v3",
+    ];
+
+    return priority
+      .map((id) => sortedProjects.find((project) => project.id === id))
+      .filter(Boolean);
+  }, [sortedProjects]);
 
   useEffect(() => {
     const sectionNodes = navSections
@@ -774,40 +783,53 @@ export default function Home() {
           onNavigate={handleNavigate}
         />
 
+        <div className="flex flex-col">
+
         <section
           id="home"
-          className="relative flex min-h-screen scroll-mt-24 items-center pb-16 pt-28"
+          className="relative order-1 flex min-h-[82svh] scroll-mt-24 items-center pb-14 pt-28"
         >
           <PageContainer>
-            <div className="flex min-h-[calc(100vh-11rem)] items-center">
+            <div className="flex min-h-[calc(82svh-9rem)] items-center py-8">
               <div className="mx-auto w-full max-w-5xl">
                 <p className="mb-7 text-xs font-bold uppercase tracking-[0.22em] text-[var(--accent-secondary)]">
                   Hrishikesh Varma · Dublin, Ireland
                 </p>
                 <HeroTitle />
                 <p className="mt-9 max-w-2xl text-lg leading-8 text-[var(--text-secondary)] sm:text-xl sm:leading-9">
-                  I turn user insight into clear, useful digital products—and
-                  bring enough frontend knowledge to design with the real build
-                  in mind.
+                  I build responsive web and mobile applications with React,
+                  Next.js and TypeScript. My UX research and product design
+                  background helps me turn complex problems into clear, usable
+                  experiences.
                 </p>
+                <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 border-y border-[var(--border-primary)] py-4 text-xs font-bold text-[var(--text-secondary)] sm:text-sm">
+                  <span>3+ years in frontend</span>
+                  <span>React · Next.js · TypeScript</span>
+                  <span>Dublin · Open to opportunities</span>
+                </div>
                 <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
                   <button
                     type="button"
                     onClick={() => scrollToSection("projects")}
                     className="group inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full bg-[var(--text-primary)] px-5 text-sm font-bold text-[#0b0c0b] transition-transform hover:-translate-y-0.5"
                   >
-                    View selected work
+                    View development work
                     <FiArrowUpRight aria-hidden />
                   </button>
-                  <ResumeDownloadButton
+                  <a
+                    href="https://github.com/hrishivuk"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full border border-[var(--border-secondary)] px-5 text-sm font-bold text-[var(--text-primary)] transition-colors hover:bg-white/[0.05]"
+                  >
+                    <FiGithub aria-hidden />
+                    GitHub
+                  </a>
+                  <ResumeDownloadButton
+                    className="inline-flex min-h-[3.35rem] items-center justify-center px-2 text-sm font-bold text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
                   >
                     Download résumé
                   </ResumeDownloadButton>
-                </div>
-                <div className="mt-7 flex items-center gap-2 text-sm font-semibold text-[var(--text-secondary)]">
-                    <span className="h-2 w-2 rounded-full bg-[var(--accent-secondary)] shadow-[0_0_14px_rgba(185,246,210,0.55)]" />
-                    Available for full-time opportunities
                 </div>
               </div>
 
@@ -815,7 +837,7 @@ export default function Home() {
           </PageContainer>
         </section>
 
-        <SectionShell id="about" eyebrow="About">
+        <SectionShell id="about" eyebrow="About" className="order-4">
           <div className="space-y-14 border-t border-[var(--border-primary)] pt-9">
             <div className="grid gap-10 lg:grid-cols-[0.38fr_0.62fr]">
               <div>
@@ -844,16 +866,14 @@ export default function Home() {
               </div>
               <div className="space-y-5 text-lg leading-8 text-[var(--text-secondary)]">
                 <p>
-                  I&apos;m Hrishi, a product designer who likes understanding
-                  why something is difficult before deciding what it should
-                  look like. I care about clear journeys, useful details and
-                  interfaces that feel considered without feeling complicated.
+                  I&apos;m Hrishi, a frontend-focused full-stack developer based
+                  in Dublin. I enjoy turning complex requirements into
+                  responsive, accessible products that feel clear to use.
                 </p>
                 <p>
-                  My background in frontend development keeps my design work
-                  grounded in real constraints. It helps me collaborate closely
-                  with engineers, question ideas early and carry decisions from
-                  research through to a working experience.
+                  My background in computer science, UX research and product
+                  design helps me understand what to build before working
+                  through the architecture, interface and implementation.
                 </p>
                 <p className="text-sm leading-7 text-[var(--text-muted)]">
                   Around three years of professional frontend experience.
@@ -863,69 +883,26 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="border-t border-[var(--border-primary)] pt-9">
-              <p className="mb-7 text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]">
-                How I work
-              </p>
-              <div className="grid gap-px overflow-hidden rounded-[28px] border border-[var(--border-primary)] bg-[var(--border-primary)] lg:grid-cols-3">
-                {[
-                  {
-                    number: "01",
-                    title: "Understand",
-                    copy: "Start with people, context and the real problem—not assumptions about what the interface should be.",
-                  },
-                  {
-                    number: "02",
-                    title: "Shape",
-                    copy: "Turn evidence into focused journeys, prototypes and design decisions that make the product easier to understand.",
-                  },
-                  {
-                    number: "03",
-                    title: "Make",
-                    copy: "Bring the idea to a polished, practical outcome while staying close to implementation and real constraints.",
-                  },
-                ].map((item) => (
-                  <article
-                    key={item.number}
-                    className="min-h-[250px] bg-[var(--bg-primary)] p-7 sm:p-9"
-                  >
-                    <p className="font-mono text-xs text-[var(--accent-secondary)]">
-                      {item.number}
-                    </p>
-                    <h3 className="mt-14 text-2xl font-black tracking-[-0.03em] text-[var(--text-primary)]">
-                      {item.title}
-                    </h3>
-                    <p className="mt-4 max-w-sm text-sm leading-7 text-[var(--text-secondary)]">
-                      {item.copy}
-                    </p>
-                  </article>
-                ))}
-              </div>
-            </div>
           </div>
         </SectionShell>
 
-        <SectionShell id="projects" eyebrow="Selected projects">
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-[var(--text-muted)] xl:hidden">
-            Swipe to explore
-          </p>
-          <div className="-mx-3 flex snap-x snap-mandatory gap-4 overflow-x-auto border-t border-[var(--border-primary)] px-3 pb-4 pt-9 sm:-mx-4 sm:px-4 md:-mx-6 md:px-6 lg:-mx-8 lg:px-8">
-            {selectedProjects.slice(0, 3).map((project, index) => (
+        <SectionShell id="projects" eyebrow="Selected development projects" className="order-2">
+          <div className="mb-10 grid gap-5 lg:grid-cols-[0.58fr_0.42fr] lg:items-end">
+            <h2 className="max-w-3xl text-[clamp(2.5rem,5vw,4.8rem)] font-black leading-[0.92] tracking-[-0.045em] text-[var(--text-primary)]">
+              Products, not just
+              <span className="block text-[var(--accent-secondary)]">prototypes.</span>
+            </h2>
+            <p className="max-w-xl text-base leading-7 text-[var(--text-secondary)] lg:pb-1">
+              Selected work spanning frontend architecture, full-stack systems,
+              mobile development and UX-informed product decisions.
+            </p>
+          </div>
+          <div className="grid gap-5 border-t border-[var(--border-primary)] pt-9 md:grid-cols-2">
+            {selectedProjects.map((project) => (
               <motion.article
                 key={project.id}
-                className="group h-[360px] w-[280px] shrink-0 snap-start sm:w-[300px] xl:w-[calc(25%-0.75rem)]"
-                initial={
-                  reduceMotion
-                    ? { opacity: 1 }
-                    : { opacity: 0, y: 28, filter: "blur(8px)" }
-                }
-                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                viewport={{ amount: 0.2, once: true, margin: "-6% 0px" }}
-                transition={{
-                  duration: 0.6,
-                  delay: reduceMotion ? 0 : (index % 2) * 0.08,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
+                className="group h-[390px] min-w-0"
+                initial={false}
               >
                 <ProjectTransitionLink
                   href={`/projects/${project.id}?from=home`}
@@ -988,34 +965,38 @@ export default function Home() {
               </motion.article>
             ))}
 
+          </div>
+          <div className="mt-7 flex justify-end">
             <Link
               href="/projects"
-              className="group flex h-[360px] w-[280px] shrink-0 snap-start flex-col justify-between rounded-[28px] border border-[var(--border-secondary)] bg-white/[0.025] p-6 transition-colors hover:bg-white/[0.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-secondary)] sm:w-[300px] xl:w-[calc(25%-0.75rem)]"
+              className="group inline-flex min-h-12 items-center gap-2 rounded-full border border-[var(--border-secondary)] px-5 text-sm font-bold text-[var(--text-primary)] transition-colors hover:bg-white/[0.05]"
             >
-              <span className="page-eyebrow text-[var(--accent-secondary)]">
-                Full archive
-              </span>
-              <div>
-                <span className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border-primary)] bg-white/[0.035] text-xl text-[var(--text-primary)] transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1">
-                  <FiArrowUpRight aria-hidden />
-                </span>
-                <h3 className="text-3xl font-black leading-none tracking-[-0.035em] text-[var(--text-primary)]">
-                  View all projects
-                </h3>
-                <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">
-                  Explore the complete collection of product, UX and development work.
-                </p>
-              </div>
+              View full project archive
+              <FiArrowUpRight className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden />
             </Link>
           </div>
         </SectionShell>
 
-        <SectionShell id="contact" eyebrow="Contact">
+        <SectionShell id="skills" eyebrow="Technical toolkit" className="order-3">
+          <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-none tracking-[-0.04em] text-[var(--text-primary)]">
+              Core stack
+            </h2>
+            <p className="max-w-md text-sm leading-6 text-[var(--text-muted)] sm:text-right">
+              The tools I use most to take product ideas from interface to data.
+            </p>
+          </div>
+          <div>
+            <SkillsStack />
+          </div>
+        </SectionShell>
+
+        <SectionShell id="contact" eyebrow="Contact" className="order-5">
           <div className="grid gap-10 border-t border-[var(--border-primary)] pt-9 lg:grid-cols-[0.38fr_0.62fr]">
             <aside className="space-y-8">
               <p className="text-lg leading-8 text-[var(--text-secondary)]">
-                I&apos;m open to UX/UI design, UX research, frontend development,
-                and multidisciplinary digital product opportunities.
+                I&apos;m open to frontend and full-stack development opportunities,
+                especially with teams that value thoughtful product craft.
               </p>
               <div className="space-y-3">
                 <a
@@ -1058,6 +1039,7 @@ export default function Home() {
             <ContactForm />
           </div>
         </SectionShell>
+        </div>
       </div>
     </main>
   );

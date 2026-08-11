@@ -9,7 +9,7 @@ import { getSortedProjects, projects } from "../../data/projects";
 export const metadata = {
   title: "Projects — Hrishikesh Varma",
   description:
-    "Selected UX, product design, research and frontend development projects by Hrishikesh Varma.",
+    "Selected frontend, full-stack, mobile and UX-informed product work by Hrishikesh Varma.",
 };
 
 function getProjectName(title) {
@@ -52,8 +52,8 @@ export default function ProjectsPage() {
             </span>
           </h1>
           <p className="mt-7 max-w-2xl text-base leading-7 text-[var(--text-secondary)] sm:text-lg sm:leading-8">
-            Product design, UX research and frontend development work—from
-            early problem framing through to working digital experiences.
+            Frontend, full-stack and mobile products shaped by UX research and
+            product design, from early problem framing through implementation.
           </p>
         </header>
 

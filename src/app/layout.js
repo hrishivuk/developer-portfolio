@@ -18,7 +18,7 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata = {
   title: "Hrishikesh Varma — UX/UI Designer, UX Researcher & Frontend Developer",
   description:
-    "Dublin-based UX/UI designer, UX researcher, and frontend developer creating user-centred web and mobile product experiences.",
+    "Dublin-based frontend-focused full-stack developer building thoughtful web and mobile products with React, Next.js and TypeScript.",
   keywords:
     "UX/UI Designer, UX Researcher, Frontend Developer, Product Design, User Research, Usability Testing, Figma, React, Next.js, Dublin",
   authors: [{ name: "Hrishikesh Varma" }],
@@ -32,7 +32,7 @@ export const metadata = {
   openGraph: {
     title: "Hrishikesh Varma — UX/UI Designer, UX Researcher & Frontend Developer",
     description:
-      "Dublin-based UX/UI designer, UX researcher, and frontend developer creating user-centred web and mobile product experiences.",
+      "Dublin-based frontend-focused full-stack developer building thoughtful web and mobile products with React, Next.js and TypeScript.",
     url: siteUrl,
     siteName: "Hrishikesh Varma Portfolio",
     type: "website",
@@ -41,7 +41,7 @@ export const metadata = {
     card: "summary",
     title: "Hrishikesh Varma — UX/UI Designer, UX Researcher & Frontend Developer",
     description:
-      "Dublin-based UX/UI designer, UX researcher, and frontend developer creating user-centred digital products.",
+      "Dublin-based frontend-focused full-stack developer building thoughtful web and mobile products.",
   },
 };
 
