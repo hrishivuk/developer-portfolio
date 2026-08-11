@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const TRANSITION_DURATION = 0.58;
+const TRANSITION_DURATION = 0.22;
 
 export default function ProjectTransitionLink({
   href,
@@ -30,11 +30,9 @@ export default function ProjectTransitionLink({
 
     event.preventDefault();
     setIsLeaving(true);
-    sessionStorage.setItem("studio-route-curtain", "project");
-
     window.setTimeout(() => {
       router.push(href);
-    }, TRANSITION_DURATION * 1000 - 90);
+    }, TRANSITION_DURATION * 1000 - 30);
   }
 
   return (
@@ -46,33 +44,20 @@ export default function ProjectTransitionLink({
       <AnimatePresence>
         {isLeaving ? (
           <motion.div
-            className="fixed inset-0 z-[120] overflow-hidden bg-[#050608]"
-            initial={{ clipPath: "inset(0 100% 0 0)" }}
-            animate={{ clipPath: "inset(0 0% 0 0)" }}
+            className="fixed inset-0 z-[120] flex items-center justify-center border-t-2 border-[var(--accent-primary)] bg-[var(--bg-primary)]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{
               duration: TRANSITION_DURATION,
-              ease: [0.76, 0, 0.24, 1],
+              ease: [0.22, 1, 0.36, 1],
             }}
             aria-live="polite"
             aria-label={label}
           >
-            <div className="absolute inset-0 studio-grid opacity-55" />
-            <div className="absolute inset-0 spider-noise opacity-30" />
-            <motion.div
-              className="absolute bottom-0 top-0 w-px bg-[var(--accent-secondary)] shadow-[0_0_28px_rgba(77,255,181,0.75)]"
-              initial={{ left: "0%" }}
-              animate={{ left: "100%" }}
-              transition={{
-                duration: TRANSITION_DURATION,
-                ease: [0.76, 0, 0.24, 1],
-              }}
-            />
-            <div className="absolute inset-x-6 top-1/2 flex -translate-y-1/2 items-center justify-between gap-8 text-xs font-bold uppercase tracking-[0.24em] text-[var(--text-muted)] sm:inset-x-12">
-              <span>Case study</span>
-              <span className="hidden text-[var(--accent-secondary)] sm:block">
-                Loading
-              </span>
+            <div className="flex items-center gap-3 font-mono text-[10px] uppercase text-[var(--text-muted)]">
+              <span className="h-px w-6 bg-[var(--accent-primary)]" />
+              <span>{label}</span>
             </div>
           </motion.div>
         ) : null}

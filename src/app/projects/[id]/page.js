@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import FlexSaveWipShowcase from "./FlexSaveWipShowcase";
 import UnifiedProjectShowcase from "./UnifiedProjectShowcase";
 import { getProjectById, projects } from "../../../data/projects";
 
@@ -33,15 +32,6 @@ export default async function ProjectDetailPage({ params, searchParams }) {
   const project = getProjectById(id);
 
   if (!project) notFound();
-
-  if (project.workInProgress) {
-    return (
-      <FlexSaveWipShowcase
-        project={project}
-        backHref={from === "home" ? "/#projects" : "/projects"}
-      />
-    );
-  }
 
   return (
     <UnifiedProjectShowcase

@@ -1,20 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "motion/react";
 import { useState } from "react";
-import { FiMenu, FiX } from "react-icons/fi";
+import { FiArrowUpRight, FiMenu, FiX } from "react-icons/fi";
+import { pageContainerClassName } from "./PageContainer";
 
 const primarySections = [
-  { id: "about", label: "About" },
-  { id: "projects", label: "Projects" },
-  { id: "contact", label: "Contact" },
+  { id: "projects", label: "Work", index: "01" },
+  { id: "skills", label: "Stack", index: "02" },
+  { id: "about", label: "About", index: "03" },
 ];
 
-export default function Navbar({
-  activeSection = "",
-  onNavigate,
-}) {
+export default function Navbar({ activeSection = "", onNavigate }) {
   const [isOpen, setIsOpen] = useState(false);
   const isHome = Boolean(onNavigate);
 
@@ -23,81 +20,101 @@ export default function Navbar({
     onNavigate?.(id);
   }
 
-  const brand = isHome ? (
-    <button
-      type="button"
-      className="text-sm font-semibold tracking-normal text-[var(--text-primary)]"
-      onClick={() => navigateHome("home")}
-    >
-      hrishi.
-    </button>
-  ) : (
-    <Link
-      href="/"
-      className="text-sm font-semibold tracking-normal text-[var(--text-primary)]"
-    >
-      hrishi.
-    </Link>
-  );
+  function renderSection(item, mobile = false) {
+    const sharedClass = mobile
+      ? "flex min-h-14 items-center justify-between border-b border-[var(--border-primary)] py-3 text-lg font-bold text-[var(--text-primary)]"
+      : `relative flex min-h-12 items-center px-3 text-sm font-semibold transition-colors after:absolute after:inset-x-3 after:bottom-0 after:h-px ${
+          activeSection === item.id
+            ? "text-[var(--text-primary)] after:bg-[var(--accent-primary)]"
+            : "text-[var(--text-muted)] after:bg-transparent hover:text-[var(--text-primary)]"
+        }`;
+
+    const content = (
+      <>
+        <span>{item.label}</span>
+        {mobile ? (
+          <span className="font-mono text-xs font-normal text-[var(--accent-primary)]">
+            {item.index}
+          </span>
+        ) : null}
+      </>
+    );
+
+    return isHome ? (
+      <button
+        key={item.id}
+        type="button"
+        onClick={() => navigateHome(item.id)}
+        className={sharedClass}
+      >
+        {content}
+      </button>
+    ) : (
+      <Link
+        key={item.id}
+        href={`/#${item.id}`}
+        onClick={() => setIsOpen(false)}
+        className={sharedClass}
+      >
+        {content}
+      </Link>
+    );
+  }
 
   return (
     <>
-      <header className="fixed inset-x-0 top-4 z-50 px-2 sm:px-3 md:px-4">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--border-primary)] bg-[var(--bg-primary)]/92 backdrop-blur-md">
         <nav
-          className="mx-auto grid min-h-[56px] w-full max-w-full grid-cols-[1fr_auto] items-center rounded-full border px-4 backdrop-blur-xl sm:px-5 md:max-w-[800px] lg:max-w-[1000px] xl:max-w-[1320px] 2xl:max-w-[1560px] min-[1920px]:max-w-[1760px]"
-          style={{
-            backgroundColor:
-              "color-mix(in srgb, var(--bg-primary) 82%, transparent)",
-            borderColor: "var(--border-primary)",
-            color: "var(--text-primary)",
-          }}
+          className={`${pageContainerClassName()} flex min-h-16 items-center justify-between gap-6`}
           aria-label="Primary navigation"
         >
-          <div className="flex items-center">{brand}</div>
+          {isHome ? (
+            <button
+              type="button"
+              onClick={() => navigateHome("home")}
+              className="group flex items-center gap-3 text-left"
+            >
+              <span className="flex h-8 w-8 items-center justify-center bg-[var(--accent-primary)] text-xs font-black text-[var(--on-accent)]">
+                HV
+              </span>
+              <span className="hidden text-sm font-bold text-[var(--text-primary)] sm:block">
+                Hrishikesh Varma
+              </span>
+            </button>
+          ) : (
+            <Link href="/" className="group flex items-center gap-3">
+              <span className="flex h-8 w-8 items-center justify-center bg-[var(--accent-primary)] text-xs font-black text-[var(--on-accent)]">
+                HV
+              </span>
+              <span className="hidden text-sm font-bold text-[var(--text-primary)] sm:block">
+                Hrishikesh Varma
+              </span>
+            </Link>
+          )}
 
-          <div className="hidden items-center justify-end gap-1 lg:flex">
-            {primarySections.map((item) =>
-              isHome ? (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => navigateHome(item.id)}
-                  className="relative rounded-full px-4 py-2 text-sm font-medium"
-                  style={{
-                    color:
-                      activeSection === item.id
-                        ? "var(--text-primary)"
-                        : "var(--text-muted)",
-                  }}
-                >
-                  {activeSection === item.id ? (
-                    <motion.span
-                      layoutId="navbar-active-pill"
-                      className="absolute inset-0 rounded-full bg-white/[0.065]"
-                      transition={{ type: "spring", stiffness: 420, damping: 34 }}
-                    />
-                  ) : null}
-                  <span className="relative z-10">{item.label}</span>
-                </button>
-              ) : (
-                <Link
-                  key={item.id}
-                  href={`/#${item.id}`}
-                  className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                    activeSection === item.id
-                      ? "bg-white/[0.065] text-[var(--text-primary)]"
-                      : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ),
+          <div className="hidden items-stretch gap-1 lg:flex">
+            {primarySections.map((item) => renderSection(item))}
+            {isHome ? (
+              <button
+                type="button"
+                onClick={() => navigateHome("contact")}
+                className="ml-3 inline-flex min-h-11 items-center gap-2 bg-[var(--accent-primary)] px-4 text-sm font-bold text-[var(--on-accent)] transition-colors hover:bg-[var(--accent-hover)]"
+              >
+                Contact <FiArrowUpRight aria-hidden />
+              </button>
+            ) : (
+              <Link
+                href="/#contact"
+                className="ml-3 inline-flex min-h-11 items-center gap-2 bg-[var(--accent-primary)] px-4 text-sm font-bold text-[var(--on-accent)] transition-colors hover:bg-[var(--accent-hover)]"
+              >
+                Contact <FiArrowUpRight aria-hidden />
+              </Link>
             )}
           </div>
 
           <button
             type="button"
-            className="inline-flex min-h-10 min-w-10 items-center justify-center justify-self-end rounded-full border border-[var(--border-primary)] text-[var(--text-primary)] transition-colors hover:border-[var(--border-secondary)] hover:bg-white/[0.05] lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center border border-[var(--border-primary)] text-[var(--text-primary)] lg:hidden"
             onClick={() => setIsOpen((current) => !current)}
             aria-label="Toggle navigation menu"
             aria-expanded={isOpen}
@@ -108,39 +125,26 @@ export default function Navbar({
       </header>
 
       {isOpen ? (
-        <div className="fixed inset-0 z-40 bg-[var(--bg-primary)]/96 px-4 pt-24 backdrop-blur-xl lg:hidden">
-          <nav
-            className="mx-auto flex max-w-xl flex-col gap-3"
-            aria-label="Mobile navigation"
-          >
-            {primarySections.map((item, index) =>
-              isHome ? (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => navigateHome(item.id)}
-                  className="flex min-h-[64px] items-center justify-between rounded-2xl border border-[var(--border-primary)] bg-white/[0.025] px-5 text-left text-xl font-black text-[var(--text-primary)]"
-                >
-                  {item.label}
-                  <span className="font-mono text-xs text-[var(--text-muted)]">
-                    0{index + 1}
-                  </span>
-                </button>
-              ) : (
-                <Link
-                  key={item.id}
-                  href={`/#${item.id}`}
-                  onClick={() => setIsOpen(false)}
-                  className="flex min-h-[64px] items-center justify-between rounded-2xl border border-[var(--border-primary)] bg-white/[0.025] px-5 text-xl font-black text-[var(--text-primary)]"
-                >
-                  {item.label}
-                  <span className="font-mono text-xs text-[var(--text-muted)]">
-                    0{index + 1}
-                  </span>
-                </Link>
-              ),
+        <div className="fixed inset-0 z-40 bg-[var(--bg-primary)] px-5 pt-24 lg:hidden">
+          <nav className="mx-auto max-w-xl" aria-label="Mobile navigation">
+            {primarySections.map((item) => renderSection(item, true))}
+            {isHome ? (
+              <button
+                type="button"
+                onClick={() => navigateHome("contact")}
+                className="mt-8 flex min-h-12 w-full items-center justify-between bg-[var(--accent-primary)] px-4 text-sm font-bold text-[var(--on-accent)]"
+              >
+                Contact <FiArrowUpRight aria-hidden />
+              </button>
+            ) : (
+              <Link
+                href="/#contact"
+                onClick={() => setIsOpen(false)}
+                className="mt-8 flex min-h-12 items-center justify-between bg-[var(--accent-primary)] px-4 text-sm font-bold text-[var(--on-accent)]"
+              >
+                Contact <FiArrowUpRight aria-hidden />
+              </Link>
             )}
-
           </nav>
         </div>
       ) : null}

@@ -82,26 +82,26 @@ export default function ResumeDownloadButton({
 
       {isOpen ? (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4"
           role="presentation"
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) setIsOpen(false);
           }}
         >
           <div
-            className="w-full max-w-md rounded-[28px] border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.45)]"
+            className="w-full max-w-md border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-5 sm:p-6"
             role="dialog"
             aria-modal="true"
             aria-labelledby="resume-selector-title"
           >
             <div className="flex items-start justify-between gap-5">
               <div>
-                <p className="page-eyebrow text-[var(--accent-secondary)]">
+                <p className="font-mono text-[10px] uppercase text-[var(--accent-primary)]">
                   Resume library
                 </p>
                 <h2
                   id="resume-selector-title"
-                  className="mt-2 text-2xl font-black tracking-[-0.04em] text-[var(--text-primary)]"
+                  className="mt-2 text-2xl font-extrabold tracking-normal text-[var(--text-primary)]"
                 >
                   Choose a version
                 </h2>
@@ -109,14 +109,14 @@ export default function ResumeDownloadButton({
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--border-primary)] text-[var(--text-secondary)] transition-colors hover:border-[var(--border-secondary)] hover:text-[var(--text-primary)]"
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-[var(--border-primary)] text-[var(--text-secondary)] transition-colors duration-200 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
                 aria-label="Close resume selector"
               >
                 <FiX aria-hidden />
               </button>
             </div>
 
-            <div className="mt-6 space-y-2">
+            <div className="mt-6 border-t border-[var(--border-primary)]">
               {resumes.map((resume) => (
                 <button
                   key={resume.fileName}
@@ -125,10 +125,10 @@ export default function ResumeDownloadButton({
                     downloadResume(resume);
                     setIsOpen(false);
                   }}
-                  className="flex min-h-14 w-full items-center justify-between rounded-2xl border border-[var(--border-primary)] bg-white/[0.02] px-4 text-left text-sm font-bold text-[var(--text-primary)] transition-colors hover:border-[var(--border-secondary)] hover:bg-white/[0.05]"
+                  className="flex min-h-14 w-full items-center justify-between border-b border-[var(--border-primary)] px-1 text-left text-sm font-bold text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--accent-primary)]"
                 >
                   <span>{resume.label}</span>
-                  <FiDownload className="text-[var(--accent-secondary)]" aria-hidden />
+                  <FiDownload className="text-[var(--accent-primary)]" aria-hidden />
                 </button>
               ))}
             </div>

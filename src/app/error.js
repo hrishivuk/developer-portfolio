@@ -5,11 +5,8 @@ import Link from "next/link";
 import { FiRefreshCw } from "react-icons/fi";
 import Navbar from "./components/navbar";
 import PageContainer from "./components/PageContainer";
-import { useTheme } from "./contexts/ThemeContext";
 
 export default function Error({ error, reset }) {
-  const { currentTheme, setCurrentTheme, themes, showThemeArrow } = useTheme();
-
   useEffect(() => {
     if (process.env.NODE_ENV !== "production") {
       console.error("Application error:", error);
@@ -18,25 +15,15 @@ export default function Error({ error, reset }) {
 
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-[var(--bg-primary)]">
-      <div className="pointer-events-none fixed inset-0 z-0 opacity-60">
-        <div className="studio-grid absolute inset-0" />
-        <div className="studio-cursor-glow absolute inset-[-10%]" />
-      </div>
-
       <div className="relative z-10">
-        <Navbar
-          currentTheme={currentTheme}
-          setCurrentTheme={setCurrentTheme}
-          themes={themes}
-          showThemeArrow={showThemeArrow}
-        />
+        <Navbar />
 
         <section className="min-h-screen pt-32 flex items-center">
           <PageContainer>
             <div className="max-w-5xl">
-              <p className="studio-kicker mb-5">Error</p>
-              <h1 className="studio-display">Something slipped in the interface.</h1>
-              <p className="studio-subheading mt-7 max-w-2xl">
+              <p className="mb-5 font-mono text-[10px] uppercase text-[var(--accent-primary)]">Error</p>
+              <h1 className="text-[clamp(3rem,7vw,7rem)] font-extrabold leading-[0.9] text-[var(--text-primary)]">Something slipped in the interface.</h1>
+              <p className="mt-7 max-w-2xl text-lg leading-8 text-[var(--text-secondary)]">
                 The page hit an unexpected state. Try reloading this view, or jump
                 back to the one-page portfolio while the issue is checked.
               </p>
@@ -44,12 +31,12 @@ export default function Error({ error, reset }) {
                 <button
                   type="button"
                   onClick={reset}
-                  className="studio-button studio-button-primary"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 bg-[var(--accent-primary)] px-5 text-sm font-bold text-[var(--on-accent)]"
                 >
                   Try again
                   <FiRefreshCw aria-hidden />
                 </button>
-                <Link href="/#projects" className="studio-button studio-button-ghost">
+                <Link href="/#projects" className="inline-flex min-h-12 items-center justify-center border border-[var(--border-secondary)] px-5 text-sm font-bold text-[var(--text-primary)]">
                   View work
                 </Link>
               </div>
