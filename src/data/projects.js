@@ -520,8 +520,8 @@ export const projects = [
       "This portfolio balances personality with clarity. It uses token-based themes (Midnight, Slate, Paper, Forest), a subtle mesh-and-grain ambient layer, and compact page layouts so work and case studies are easy to scan.",
     image: "/images/portfolio/portfolio.png",
     technologies: ["Next.js", "React", "Framer Motion", "Tailwind CSS"],
-    liveUrl: "",
-    githubUrl: "",
+    liveUrl: "https://hrishivuk.com",
+    githubUrl: "https://github.com/hrishivuk/developer-portfolio",
     role: "Frontend Developer · Visual Design",
     responsibilities: [
       "Architected the layout system and theme context.",

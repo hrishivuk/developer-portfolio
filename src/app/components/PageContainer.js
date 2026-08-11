@@ -3,9 +3,8 @@
  */
 export function pageContainerClassName(extra = "") {
   return [
-    "w-[calc(100%-1rem)] sm:w-[calc(100%-1.5rem)] md:w-[calc(100%-2rem)]",
-    "max-w-full md:max-w-[800px] lg:max-w-[1000px] xl:max-w-[1320px] 2xl:max-w-[1560px] min-[1920px]:max-w-[1760px]",
-    "mx-auto px-3 sm:px-4 md:px-6 lg:px-8",
+    "mx-auto w-full max-w-[1440px]",
+    "px-5 sm:px-8 lg:px-12 xl:px-16",
     extra,
   ]
     .filter(Boolean)
