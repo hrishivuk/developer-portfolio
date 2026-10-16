@@ -1,6 +1,14 @@
 import Image from "next/image";
+import { FiPenTool } from "react-icons/fi";
 
 const skills = [
+  { name: "Figma", use: "Wireframing and prototyping" },
+  { name: "UX Research", use: "Problem exploration and usability testing" },
+  { name: "Interaction Design", use: "User flows and interface behaviour" },
+  { name: "Design Systems", use: "Consistent components and visual language" },
+  { name: "React Native", use: "Role-aware mobile experiences", icon: "/images/TechIcons/React.png" },
+  { name: "Tailwind CSS", use: "Responsive interface implementation" },
+  { name: "Supabase", use: "Authentication and backend integrations" },
   { name: "React", use: "Interface architecture", icon: "/images/TechIcons/React.png" },
   { name: "Next.js", use: "Full-stack web applications", icon: "/images/TechIcons/Next.js.png" },
   { name: "TypeScript", use: "Reliable application code", icon: "/images/TechIcons/TypeScript.png" },
@@ -20,13 +28,13 @@ export default function SkillsStack() {
           <span className="self-start pt-1 font-mono text-[10px] text-[var(--accent-primary)]">
             {String(index + 1).padStart(2, "0")}
           </span>
-          <Image
+          {skill.icon ? <Image
             src={skill.icon}
             alt=""
             width={32}
             height={32}
             className="h-8 w-8 object-contain grayscale transition duration-200 group-hover:grayscale-0"
-          />
+          /> : <FiPenTool aria-hidden className="h-8 w-8 text-[var(--text-muted)] transition-colors group-hover:text-[var(--accent-primary)]" />}
           <div className="min-w-0">
             <p className="font-bold text-[var(--text-primary)]">{skill.name}</p>
             <p className="mt-1 text-xs leading-5 text-[var(--text-muted)]">

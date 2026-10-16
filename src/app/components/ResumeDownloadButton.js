@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useRef, useState } from "react";
+import useModalFocus from "./useModalFocus";
 import { FiDownload, FiX } from "react-icons/fi";
 
 function downloadResume(resume) {
@@ -22,16 +23,10 @@ export default function ResumeDownloadButton({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    if (!isOpen) return undefined;
-
-    function handleKeyDown(event) {
-      if (event.key === "Escape") setIsOpen(false);
-    }
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen]);
+  const dialogRef = useRef(null);
+  const primaryResumeRef = useRef(null);
+  const closeDialog = useCallback(() => setIsOpen(false), []);
+  useModalFocus(isOpen, dialogRef, closeDialog, primaryResumeRef);
 
   async function handleDownloadClick() {
     if (isLoading) return;
@@ -90,6 +85,8 @@ export default function ResumeDownloadButton({
         >
           <div
             className="w-full max-w-md border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-5 sm:p-6"
+            ref={dialogRef}
+            tabIndex={-1}
             role="dialog"
             aria-modal="true"
             aria-labelledby="resume-selector-title"
@@ -120,6 +117,7 @@ export default function ResumeDownloadButton({
               {resumes.map((resume) => (
                 <button
                   key={resume.fileName}
+                  ref={resume.primary ? primaryResumeRef : undefined}
                   type="button"
                   onClick={() => {
                     downloadResume(resume);
@@ -127,7 +125,12 @@ export default function ResumeDownloadButton({
                   }}
                   className="flex min-h-14 w-full items-center justify-between border-b border-[var(--border-primary)] px-1 text-left text-sm font-bold text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--accent-primary)]"
                 >
-                  <span>{resume.label}</span>
+                  <span className={`inline-flex items-center gap-2 ${resume.primary ? "text-[var(--accent-primary)]" : ""}`}>
+                    {resume.primary ? (
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent-primary)]" aria-hidden />
+                    ) : null}
+                    {resume.label}
+                  </span>
                   <FiDownload className="text-[var(--accent-primary)]" aria-hidden />
                 </button>
               ))}

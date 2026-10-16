@@ -1,37 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Hrishikesh Varma — UX Engineering Portfolio
 
-## Getting Started
+A Next.js App Router portfolio covering product design, UX/interface work and professional frontend development. The current Portfolio v3 uses one visual theme, Space Grotesk, shared CSS tokens, React components and Motion interactions.
 
-First, run the development server:
+## Development and checks
 
-```bash
+```sh
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm test
+npm run lint
+npm run build
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`. The homepage is `src/app/page.js`; project content is in `src/data/projects.js`. Tests use the Node.js 22 built-in test runner and do not send email.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Content conventions
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `primaryDiscipline` and `archiveOrder` control archive grouping/order.
+- `featuredOrder` selects homepage projects; the legacy `featured` field is not used for selection.
+- `status` describes project maturity or context, never editorial progress or inferred business success.
+- `summary` is the visible case-study introduction; `oneLiner` supports metadata.
+- `cardTags` is an explicit card selection. `technologies` retains the documented toolset.
+- `galleryOrder` selects and orders the main gallery by image path. Other screenshots remain available under supporting media.
+- Design/implementation/handoff decisions are shown directly; product reasoning remains available in an expandable section. Use `scopeNotes` and `limitations` for relevant boundaries.
+- Existing documents and images live in `public/`. Do not invent links, integrations or measured outcomes.
 
-## Learn More
+## Contact configuration
 
-To learn more about Next.js, take a look at the following resources:
+Server-only variables: `RESEND_API_KEY`, `CONTACT_EMAIL`, and `RESEND_FROM_EMAIL`. The recipient falls back to `RESEND_FROM_EMAIL` when `CONTACT_EMAIL` is absent. Configure a sender accepted by Resend; the development default sender may be restricted by the provider.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The API returns success only after Resend returns an acceptance ID. Missing configuration or provider failure returns an error and the form offers direct email. Provider acceptance does not guarantee inbox delivery. No secrets or provider error details are returned to the client.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Optional variables: `NEXT_PUBLIC_SITE_URL` for site metadata, and server-only `GITHUB_TOKEN` for repository activity. GitHub activity is labelled as code activity, not shipment or deployment.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# portfolioV2.0
+No deployment or commit is performed by the verification commands.

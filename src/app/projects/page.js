@@ -5,12 +5,16 @@ import Navbar from "../components/navbar";
 import PageContainer from "../components/PageContainer";
 import ProjectTelemetry from "../components/ProjectTelemetry";
 import ProjectTransitionLink from "../components/ProjectTransitionLink";
-import { getSortedProjects, projects } from "../../data/projects";
+import { getSortedProjects, projects, projectGroups } from "../../data/projects";
+
+const archiveTitle = "UX Engineering & Design Projects | Hrishikesh Varma";
+const archiveDescription = "Product design, UX research, interface design and frontend engineering work by Hrishikesh Varma.";
 
 export const metadata = {
-  title: "Development Projects - Hrishikesh Varma",
-  description:
-    "Frontend, full-stack, mobile and UX-informed product work by Hrishikesh Varma.",
+  title: archiveTitle,
+  description: archiveDescription,
+  openGraph: { title: archiveTitle, description: archiveDescription, url: "/projects" },
+  twitter: { card: "summary", title: archiveTitle, description: archiveDescription },
 };
 
 function getProjectName(title) {
@@ -45,18 +49,19 @@ export default function ProjectsPage() {
               Work built to solve real problems<span className="text-[var(--accent-primary)]">.</span>
             </h1>
             <p className="max-w-xl text-base leading-7 text-[var(--text-secondary)] lg:pb-2">
-              Frontend, full-stack and mobile products shaped by UX research,
-              technical constraints and hands-on implementation.
+              Product design and engineering, UX explorations and frontend work — from understanding a problem to shaping and building an interface.
             </p>
           </div>
         </header>
 
-        <section
-          className="grid gap-px bg-[var(--border-primary)] sm:grid-cols-2"
-          aria-label="All projects"
+        {projectGroups.map((group) => (
+        <section key={group} className="pt-10" aria-label={group}>
+          <h2 className="mb-8 border-b border-[var(--border-primary)] pb-4 font-mono text-[11px] uppercase text-[var(--text-muted)]">{group}</h2>
+        <div
+          className="grid sm:grid-cols-2"
         >
-          {allProjects.map((project, index) => (
-            <article key={project.id} className="group min-w-0 bg-[var(--bg-primary)]">
+          {allProjects.filter((project) => project.primaryDiscipline === group).map((project, index) => (
+            <article key={project.id} className="group min-w-0 border-b border-[var(--border-primary)] bg-[var(--bg-primary)] sm:odd:border-r">
               <ProjectTransitionLink
                 href={`/projects/${project.id}?from=projects`}
                 label={`Opening ${getProjectName(project.title)} case study`}
@@ -67,16 +72,16 @@ export default function ProjectsPage() {
                     <p className="font-mono text-[10px] text-[var(--accent-primary)]">
                       {String(index + 1).padStart(2, "0")} / {project.year}
                     </p>
-                    <h2 className="mt-5 text-[clamp(1.8rem,4vw,3rem)] font-extrabold leading-none tracking-normal text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent-primary)]">
+                    <h3 className="mt-5 text-[clamp(1.8rem,4vw,3rem)] font-extrabold leading-none tracking-normal text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent-primary)]">
                       {getProjectName(project.title)}
-                    </h2>
+                    </h3>
                     <p className="mt-3 line-clamp-2 min-h-12 max-w-xl text-sm leading-6 text-[var(--text-secondary)]">
                       {project.cardImpact ||
                         getProjectDescriptor(project.title) ||
                         project.summary}
                     </p>
                     <div className="mt-3 flex max-h-8 flex-wrap gap-x-3 gap-y-1 overflow-hidden font-mono text-[10px] font-medium uppercase text-[var(--text-primary)]">
-                      {(project.technologies || []).slice(0, 3).map((tool) => (
+                      {(project.cardTags || project.technologies || []).map((tool) => (
                         <span key={tool}>{tool}</span>
                       ))}
                     </div>
@@ -103,21 +108,18 @@ export default function ProjectsPage() {
                   <div className="absolute inset-x-0 bottom-0 flex min-h-12 items-center justify-end border-t border-[var(--border-primary)] bg-[var(--bg-primary)]/95 px-3 py-2 backdrop-blur-sm">
                     <ProjectTelemetry
                       projectId={project.id}
-                      fallbackYear={project.year}
+                      projectStatus={project.status}
                       hasLiveUrl={Boolean(project.liveUrl || project.websiteLinks?.length)}
                       hasSource={Boolean(project.githubUrl)}
                     />
                   </div>
-                  {project.workInProgress ? (
-                    <span className="absolute right-3 top-3 rounded-full bg-[var(--accent-primary)] px-3 py-1.5 font-mono text-[9px] uppercase text-[var(--on-accent)]">
-                      In progress
-                    </span>
-                  ) : null}
                 </div>
               </ProjectTransitionLink>
             </article>
           ))}
+        </div>
         </section>
+        ))}
       </PageContainer>
     </main>
   );

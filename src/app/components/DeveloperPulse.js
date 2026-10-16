@@ -3,13 +3,13 @@
 import { useEffect, useState } from "react";
 
 const fallback = {
-  project: "Developer portfolio",
+  project: "View GitHub profile",
   updatedAt: null,
   url: "https://github.com/hrishivuk",
 };
 
 function relativeUpdate(value) {
-  if (!value) return "Recently updated";
+  if (!value || !Number.isFinite(new Date(value).getTime())) return "Activity unavailable";
 
   const elapsedDays = Math.max(
     0,
@@ -57,11 +57,11 @@ export default function DeveloperPulse() {
         target="_blank"
         rel="noopener noreferrer"
         className="group grid min-h-16 items-center gap-2 py-3 sm:grid-cols-[0.25fr_0.45fr_0.3fr] sm:gap-5"
-        aria-label={`View the most recently updated repository: ${activity.project}`}
+        aria-label={activity.updatedAt ? `View repository activity: ${activity.project}` : "View GitHub profile"}
       >
         <p className="font-mono text-[9px] uppercase text-[var(--accent-primary)]">
           <span className="mr-2 inline-block h-1.5 w-1.5 bg-[var(--accent-primary)]" />
-          Last shipped
+          Repository activity
         </p>
         <p className="truncate text-sm font-bold text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent-primary)]" aria-live="polite">
           {activity.project}

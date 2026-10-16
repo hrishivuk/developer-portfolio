@@ -1,23 +1,32 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FiArrowUpRight, FiMenu, FiX } from "react-icons/fi";
+import { navigationSections } from "../../data/navigation";
+import useModalFocus from "./useModalFocus";
 import { pageContainerClassName } from "./PageContainer";
 
-const primarySections = [
-  { id: "projects", label: "Work", index: "01" },
-  { id: "skills", label: "Stack", index: "02" },
-  { id: "about", label: "About", index: "03" },
-];
+const primarySections = navigationSections.filter(section => section.index);
 
 export default function Navbar({ activeSection = "", onNavigate }) {
   const [isOpen, setIsOpen] = useState(false);
   const isHome = Boolean(onNavigate);
+  const navigationRef = useRef(null);
+  const menuButtonRef = useRef(null);
+  const closeMenu = useCallback(() => setIsOpen(false), []);
+  useModalFocus(isOpen, navigationRef, closeMenu, menuButtonRef);
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const closeOnDesktop = () => { if (desktop.matches) setIsOpen(false); };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
 
   function navigateHome(id) {
     setIsOpen(false);
-    onNavigate?.(id);
+    if (isOpen) window.requestAnimationFrame(() => onNavigate?.(id));
+    else onNavigate?.(id);
   }
 
   function renderSection(item, mobile = false) {
@@ -46,6 +55,7 @@ export default function Navbar({ activeSection = "", onNavigate }) {
         type="button"
         onClick={() => navigateHome(item.id)}
         className={sharedClass}
+        aria-current={activeSection === item.id ? "location" : undefined}
       >
         {content}
       </button>
@@ -55,6 +65,7 @@ export default function Navbar({ activeSection = "", onNavigate }) {
         href={`/#${item.id}`}
         onClick={() => setIsOpen(false)}
         className={sharedClass}
+        aria-current={activeSection === item.id ? "location" : undefined}
       >
         {content}
       </Link>
@@ -62,7 +73,7 @@ export default function Navbar({ activeSection = "", onNavigate }) {
   }
 
   return (
-    <>
+    <div ref={navigationRef} role={isOpen ? "dialog" : undefined} aria-modal={isOpen ? true : undefined} aria-label={isOpen ? "Navigation menu" : undefined}>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--border-primary)] bg-[var(--bg-primary)]/92 backdrop-blur-md">
         <nav
           className={`${pageContainerClassName()} flex min-h-16 items-center justify-between gap-6`}
@@ -116,7 +127,9 @@ export default function Navbar({ activeSection = "", onNavigate }) {
             type="button"
             className="inline-flex h-11 w-11 items-center justify-center border border-[var(--border-primary)] text-[var(--text-primary)] lg:hidden"
             onClick={() => setIsOpen((current) => !current)}
-            aria-label="Toggle navigation menu"
+            ref={menuButtonRef}
+            aria-controls={isOpen ? "mobile-navigation" : undefined}
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={isOpen}
           >
             {isOpen ? <FiX aria-hidden /> : <FiMenu aria-hidden />}
@@ -126,7 +139,7 @@ export default function Navbar({ activeSection = "", onNavigate }) {
 
       {isOpen ? (
         <div className="fixed inset-0 z-40 bg-[var(--bg-primary)] px-5 pt-24 lg:hidden">
-          <nav className="mx-auto max-w-xl" aria-label="Mobile navigation">
+          <nav id="mobile-navigation" className="mx-auto max-w-xl" aria-label="Mobile navigation">
             {primarySections.map((item) => renderSection(item, true))}
             {isHome ? (
               <button
@@ -148,6 +161,6 @@ export default function Navbar({ activeSection = "", onNavigate }) {
           </nav>
         </div>
       ) : null}
-    </>
+    </div>
   );
 }

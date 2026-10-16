@@ -52,8 +52,8 @@ export async function GET() {
         repository: repositoryName || null,
         project: repositoryName
           ? projectName(repositoryName)
-          : "Developer portfolio",
-        message: commit?.message?.split("\n")[0] || "Recent project update",
+          : "View GitHub profile",
+        message: commit?.message?.split("\n")[0] || null,
         updatedAt: push?.created_at || repository?.pushed_at || null,
         language: repository?.language || null,
         url: repository?.html_url ||
@@ -70,8 +70,8 @@ export async function GET() {
     return NextResponse.json(
       {
         repository: null,
-        project: "Developer portfolio",
-        message: "Recent project update",
+        project: "View GitHub profile",
+        message: null,
         updatedAt: null,
         language: null,
         url: `https://github.com/${GITHUB_USER}`,

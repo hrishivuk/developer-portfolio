@@ -23,6 +23,16 @@ export async function generateMetadata({ params }) {
   return {
     title: `${getProjectName(project.title)} — Hrishikesh Varma`,
     description: project.oneLiner || project.summary,
+    openGraph: {
+      title: `${getProjectName(project.title)} — Hrishikesh Varma`,
+      description: project.oneLiner || project.summary,
+      url: `/projects/${project.id}`,
+    },
+    twitter: {
+      card: "summary",
+      title: `${getProjectName(project.title)} — Hrishikesh Varma`,
+      description: project.oneLiner || project.summary,
+    },
   };
 }
 

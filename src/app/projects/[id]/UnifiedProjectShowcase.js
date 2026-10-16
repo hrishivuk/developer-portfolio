@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { getProjectPresentation } from "../../../lib/projectPresentation";
 import Link from "next/link";
 import {
   FiArrowLeft,
@@ -51,6 +52,24 @@ function SectionHeading({ index, title }) {
   );
 }
 
+function ScreenshotGrid({ screenshots }) {
+  return (
+    <div className="grid gap-px bg-[var(--border-primary)] sm:grid-cols-2">
+      {screenshots.map((shot, index) => (
+        <figure key={shot.src} className="min-w-0 bg-[var(--bg-primary)] p-4 sm:p-5">
+          <div className={`relative overflow-hidden border border-[var(--border-primary)] bg-[var(--bg-secondary)] ${shot.aspect === "portrait" ? "aspect-[3/4]" : shot.aspect === "banner" ? "aspect-[4/1]" : "aspect-[4/3]"}`}>
+            <Image src={shot.src} alt={shot.alt} fill sizes="(min-width: 640px) 50vw, 100vw" className="object-contain p-2" />
+          </div>
+          <figcaption className="mt-3 flex gap-3 font-mono text-[9px] uppercase leading-5 text-[var(--text-muted)]">
+            <span className="text-[var(--accent-primary)]">{String(index + 1).padStart(2, "0")}</span>
+            {shot.alt}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  );
+}
+
 export default function UnifiedProjectShowcase({ project, backHref = "/projects" }) {
   const projectName = getProjectName(project.title);
   const backLabel =
@@ -58,15 +77,11 @@ export default function UnifiedProjectShowcase({ project, backHref = "/projects"
   const website = project.websiteLinks?.[0]?.href || project.liveUrl;
   const source = project.githubUrl;
   const documents = project.documentLinks || [];
-  const contributionGroups = project.contributions
-    ? Object.entries(project.contributions)
-    : project.responsibilities?.length
-      ? [["Contribution", project.responsibilities]]
-      : [];
-  const productDecisions = project.caseStudy?.productThinking || [];
-  const engineeringDecisions = project.caseStudy?.engineeringDecisions || [];
-  const decisions = [...productDecisions.slice(0, 2), ...engineeringDecisions.slice(0, 2)];
-  const screenshots = project.screenshots || [];
+  const {
+    contributions: contributionGroups, decisions, supportingDecisions,
+    screenshots, supportingImages, sectionNumber,
+  } = getProjectPresentation(project);
+  const websiteLabel = project.websiteLabel || "View website";
   const challenge = project.caseStudy?.problem || project.problem;
   const response = project.solution || project.caseStudy?.opportunity || project.summary;
 
@@ -90,12 +105,12 @@ export default function UnifiedProjectShowcase({ project, backHref = "/projects"
             <div>
               <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] uppercase">
                 <span className="text-[var(--accent-primary)]">
-                  {project.category}
+                  {project.primaryDiscipline || project.category}
                 </span>
                 <span className="text-[var(--text-muted)]">/ {project.year}</span>
-                {project.workInProgress ? (
+                {project.status ? (
                   <span className="rounded-full bg-[var(--accent-primary)] px-2.5 py-1 text-[var(--on-accent)]">
-                    In progress
+                    {project.status}
                   </span>
                 ) : null}
               </div>
@@ -104,14 +119,14 @@ export default function UnifiedProjectShowcase({ project, backHref = "/projects"
                 {projectName}<span className="text-[var(--accent-primary)]">.</span>
               </h1>
               <p className="mt-7 max-w-2xl text-lg leading-8 text-[var(--text-secondary)]">
-                {project.oneLiner || firstSentence(project.summary)}
+                {project.summary || project.oneLiner}
               </p>
 
               <dl className="mt-9 grid border-l border-t border-[var(--border-primary)] sm:grid-cols-3">
                 {[
-                  ["Platform", project.platform || project.category],
-                  ["Role", project.role],
-                  ["Timeline", project.timeline || project.year],
+                  ["Platform", project.platform || "Digital experience"],
+                  ["Role", [project.role, project.team].filter(Boolean).join(" · ")],
+                  ["Timeline", project.timeline || project.caseStudy?.timeline || project.year],
                 ].map(([label, value]) => (
                   <div key={label} className="border-b border-r border-[var(--border-primary)] px-4 py-4">
                     <dt className="font-mono text-[9px] uppercase text-[var(--accent-primary)]">
@@ -125,15 +140,15 @@ export default function UnifiedProjectShowcase({ project, backHref = "/projects"
               </dl>
 
               <div className="mt-7 flex flex-wrap gap-x-4 gap-y-2 font-mono text-[10px] uppercase text-[var(--text-muted)]">
-                {(project.technologies || []).slice(0, 8).map((tool) => (
+                {(project.displayTechnologies || project.technologies || []).map((tool) => (
                   <span key={tool}>{tool}</span>
                 ))}
               </div>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                <ActionLink href={website} label="Live product" icon={FiGlobe} primary />
+                <ActionLink href={website} label={websiteLabel} icon={FiGlobe} primary />
                 <ActionLink href={source} label="Source code" icon={FiGithub} primary={!website} />
-                {documents.slice(0, 2).map((document) => (
+                {documents.map((document) => (
                   <ActionLink
                     key={document.href}
                     href={document.href}
@@ -159,7 +174,7 @@ export default function UnifiedProjectShowcase({ project, backHref = "/projects"
           </header>
 
           <section className="grid gap-10 border-b border-[var(--border-primary)] py-14 sm:py-20 lg:grid-cols-[0.32fr_0.68fr] lg:gap-16">
-            <SectionHeading index="01 / CONTEXT" title="Problem and response" />
+            <SectionHeading index={`${sectionNumber("context")} / CONTEXT`} title="Problem and response" />
             <div className="grid gap-px bg-[var(--border-primary)] sm:grid-cols-2">
               <div className="bg-[var(--bg-primary)] p-6 sm:p-8">
                 <p className="font-mono text-[9px] uppercase text-[var(--accent-primary)]">Challenge</p>
@@ -178,7 +193,7 @@ export default function UnifiedProjectShowcase({ project, backHref = "/projects"
 
           {contributionGroups.length ? (
             <section className="grid gap-10 border-b border-[var(--border-primary)] py-14 sm:py-20 lg:grid-cols-[0.32fr_0.68fr] lg:gap-16">
-              <SectionHeading index="02 / CONTRIBUTION" title="What I owned" />
+              <SectionHeading index={`${sectionNumber("contribution")} / CONTRIBUTION`} title="My contribution" />
               <div className="border-t border-[var(--border-primary)]">
                 {contributionGroups.map(([group, items]) => (
                   <div key={group} className="grid gap-5 border-b border-[var(--border-primary)] py-6 sm:grid-cols-[0.3fr_0.7fr]">
@@ -186,7 +201,7 @@ export default function UnifiedProjectShowcase({ project, backHref = "/projects"
                       {group}
                     </h3>
                     <ul className="space-y-4">
-                      {items.slice(0, 5).map((item) => (
+                      {items.map((item) => (
                         <li key={item} className="grid grid-cols-[1rem_1fr] gap-3 text-sm leading-7 text-[var(--text-secondary)]">
                           <span className="pt-0.5 text-[var(--accent-primary)]">+</span>
                           <span>{item}</span>
@@ -199,39 +214,28 @@ export default function UnifiedProjectShowcase({ project, backHref = "/projects"
             </section>
           ) : null}
 
-          {screenshots.length ? (
+          {screenshots.length || supportingImages.length ? (
             <section className="border-b border-[var(--border-primary)] py-14 sm:py-20">
               <div className="mb-10 grid gap-5 lg:grid-cols-[0.32fr_0.68fr] lg:gap-16">
-                <SectionHeading index="03 / PRODUCT" title="Selected interface" />
+                <SectionHeading index={`${sectionNumber("gallery")} / PRODUCT`} title="Selected interface" />
                 <p className="max-w-2xl text-base leading-7 text-[var(--text-secondary)]">
                   A focused view of the product states and workflows that carry the core experience.
                 </p>
               </div>
-              <div className="grid gap-px bg-[var(--border-primary)] sm:grid-cols-2">
-                {screenshots.slice(0, 4).map((shot, index) => (
-                  <figure key={shot.src} className="bg-[var(--bg-primary)] p-4 sm:p-5">
-                    <div className={`relative overflow-hidden border border-[var(--border-primary)] bg-[var(--bg-secondary)] ${shot.aspect === "portrait" ? "aspect-[3/4]" : "aspect-[4/3]"}`}>
-                      <Image
-                        src={shot.src}
-                        alt={shot.alt}
-                        fill
-                        sizes="(min-width: 640px) 50vw, 100vw"
-                        className="object-contain p-2"
-                      />
-                    </div>
-                    <figcaption className="mt-3 flex gap-3 font-mono text-[9px] uppercase leading-5 text-[var(--text-muted)]">
-                      <span className="text-[var(--accent-primary)]">{String(index + 1).padStart(2, "0")}</span>
-                      {shot.alt}
-                    </figcaption>
-                  </figure>
-                ))}
-              </div>
+              <ScreenshotGrid screenshots={screenshots} />
+              {supportingImages.length ? (
+                <details className="mt-7 border-t border-[var(--border-primary)] pt-5">
+                  <summary className="cursor-pointer text-sm font-bold text-[var(--text-secondary)]">Supporting screens and process ({supportingImages.length})</summary>
+                  <div className="mt-5"><ScreenshotGrid screenshots={supportingImages} /></div>
+                </details>
+              ) : null}
             </section>
           ) : null}
 
-          {decisions.length ? (
+          {decisions.length || supportingDecisions.length ? (
             <section className="grid gap-10 border-b border-[var(--border-primary)] py-14 sm:py-20 lg:grid-cols-[0.32fr_0.68fr] lg:gap-16">
-              <SectionHeading index="04 / DECISIONS" title="How the system took shape" />
+              <SectionHeading index={`${sectionNumber("decisions")} / DECISIONS`} title="How the system took shape" />
+              <div>
               <ol className="border-t border-[var(--border-primary)]">
                 {decisions.map((decision, index) => (
                   <li key={decision} className="grid grid-cols-[2.5rem_1fr] gap-4 border-b border-[var(--border-primary)] py-6">
@@ -242,13 +246,24 @@ export default function UnifiedProjectShowcase({ project, backHref = "/projects"
                   </li>
                 ))}
               </ol>
+              {supportingDecisions.length ? (
+                <details className="mt-6 border-b border-[var(--border-primary)] pb-6">
+                  <summary className="cursor-pointer text-sm font-bold text-[var(--text-secondary)]">Product context and reasoning</summary>
+                  <ul className="mt-4 space-y-4 text-sm leading-7 text-[var(--text-secondary)]">
+                    {supportingDecisions.map(item => <li key={item}>{item}</li>)}
+                  </ul>
+                </details>
+              ) : null}
+              </div>
             </section>
           ) : null}
 
           <section className="grid gap-10 border-b border-[var(--border-primary)] py-14 sm:py-20 lg:grid-cols-[0.32fr_0.68fr] lg:gap-16">
-            <SectionHeading index="05 / OUTCOME" title="Outcome and reflection" />
+            <SectionHeading index={`${sectionNumber("outcome")} / OUTCOME`} title="Outcome and reflection" />
             <div className="max-w-3xl space-y-7 text-lg leading-8 text-[var(--text-secondary)]">
+              {project.caseStudy?.scopeNotes?.map(note => <p key={note} className="text-base leading-7">{note}</p>)}
               <p>{project.caseStudy?.outcome || project.highlights?.[0] || project.summary}</p>
+              {project.caseStudy?.limitations ? <p className="text-base leading-7">{project.caseStudy.limitations}</p> : null}
               {project.caseStudy?.reflection ? (
                 <p className="border-l-2 border-[var(--accent-primary)] pl-6 text-[var(--text-primary)]">
                   {project.caseStudy.reflection}
@@ -265,7 +280,7 @@ export default function UnifiedProjectShowcase({ project, backHref = "/projects"
               <FiArrowLeft aria-hidden /> {backLabel}
             </Link>
             <div className="flex flex-wrap gap-3">
-              <ActionLink href={website} label="Live product" icon={FiGlobe} primary />
+              <ActionLink href={website} label={websiteLabel} icon={FiGlobe} primary />
               <ActionLink href={source} label="Source code" icon={FiGithub} />
               {documents.slice(0, 1).map((document) => (
                 <ActionLink key={document.href} href={document.href} label={document.title} icon={FiFileText} />

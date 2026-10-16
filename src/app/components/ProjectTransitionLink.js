@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const TRANSITION_DURATION = 0.22;
 
@@ -15,10 +15,13 @@ export default function ProjectTransitionLink({
   const router = useRouter();
   const reduceMotion = useReducedMotion();
   const [isLeaving, setIsLeaving] = useState(false);
+  const timerRef = useRef(null);
+  useEffect(() => () => window.clearTimeout(timerRef.current), []);
 
   function handleClick(event) {
     if (
       reduceMotion ||
+      event.detail === 0 ||
       event.metaKey ||
       event.ctrlKey ||
       event.shiftKey ||
@@ -30,7 +33,7 @@ export default function ProjectTransitionLink({
 
     event.preventDefault();
     setIsLeaving(true);
-    window.setTimeout(() => {
+    timerRef.current = window.setTimeout(() => {
       router.push(href);
     }, TRANSITION_DURATION * 1000 - 30);
   }

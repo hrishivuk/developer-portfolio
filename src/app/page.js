@@ -19,22 +19,21 @@ import ProjectTelemetry from "./components/ProjectTelemetry";
 import ProjectTransitionLink from "./components/ProjectTransitionLink";
 import ResumeDownloadButton from "./components/ResumeDownloadButton";
 import SkillsStack from "./components/SkillsStack";
-import { getSortedProjects, projects } from "../data/projects";
+import { navigationSections } from "../data/navigation";
+import { getFeaturedProjects } from "../data/projects";
 
-const navSections = [
-  { id: "home", label: "Home" },
-  { id: "projects", label: "Projects" },
-  { id: "about", label: "About" },
-  { id: "contact", label: "Contact" },
-];
+const navSections = navigationSections;
 
 const inputBase =
-  "w-full min-h-12 border px-4 py-3 text-sm outline-none transition-colors focus:border-[var(--accent-primary)]";
+  "w-full min-h-12 border px-4 py-3 text-sm transition-colors focus:border-[var(--accent-primary)]";
 
 function scrollToSection(id) {
   const node = document.getElementById(id);
   if (!node) return;
-  node.scrollIntoView({ behavior: "smooth", block: "start" });
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  node.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+  node.focus({ preventScroll: true });
+  window.history.replaceState(null, "", `#${id}`);
 }
 
 function SectionShell({ id, eyebrow, children, className = "" }) {
@@ -43,6 +42,7 @@ function SectionShell({ id, eyebrow, children, className = "" }) {
   return (
     <section
       id={id}
+      tabIndex={-1}
       className={`relative scroll-mt-24 py-16 sm:py-24 ${className}`}
     >
       <PageContainer>
@@ -68,9 +68,9 @@ function SectionShell({ id, eyebrow, children, className = "" }) {
 function HeroTitle() {
   return (
     <h1 className="max-w-6xl text-[clamp(3rem,7vw,7rem)] font-extrabold leading-[0.9] tracking-normal text-[var(--text-primary)]">
-      Building interfaces
+      Designing experiences.
       <span className="block">
-        that hold up<span className="text-[var(--accent-primary)]">.</span>
+        Building products<span className="text-[var(--accent-primary)]">.</span>
       </span>
     </h1>
   );
@@ -93,6 +93,10 @@ function ContactForm() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+  const feedbackRef = useRef(null);
+  useEffect(() => {
+    if (submitStatus) feedbackRef.current?.focus();
+  }, [submitStatus]);
 
   const fieldStyle = {
     backgroundColor: "rgba(255, 255, 255, 0.035)",
@@ -118,7 +122,8 @@ function ContactForm() {
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) throw new Error("Contact request failed");
+      const result = await response.json();
+      if (!response.ok || result.accepted !== true) throw new Error("Contact request failed");
 
       setSubmitStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
@@ -132,6 +137,7 @@ function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
+      aria-busy={isSubmitting}
       className="border-t border-[var(--border-primary)] pt-6 sm:pt-8"
     >
       <div className="grid gap-5 sm:grid-cols-2">
@@ -156,10 +162,10 @@ function ContactForm() {
       </div>
 
       {submitStatus === "success" && (
-        <p className="mt-5 text-sm font-medium text-[var(--accent-secondary)]">Message sent. I&apos;ll be in touch soon.</p>
+        <p ref={feedbackRef} tabIndex={-1} role="status" className="mt-5 text-sm font-medium text-[var(--accent-secondary)]">Message submitted successfully.</p>
       )}
       {submitStatus === "error" && (
-        <p className="mt-5 text-sm font-medium text-red-300">Something went wrong. Email me directly instead.</p>
+        <p ref={feedbackRef} tabIndex={-1} role="alert" className="mt-5 text-sm font-medium text-red-300">Your message could not be submitted. <a className="underline" href="mailto:officialhrishivuk@gmail.com">Email me directly instead.</a></p>
       )}
 
       <button type="submit" disabled={isSubmitting} className="mt-7 inline-flex min-h-12 items-center justify-center gap-2 bg-[var(--accent-primary)] px-5 text-sm font-bold text-[var(--on-accent)] transition-colors hover:bg-[var(--accent-hover)] disabled:cursor-not-allowed disabled:opacity-50">
@@ -175,19 +181,7 @@ export default function Home() {
   const pendingSectionRef = useRef(null);
   const pendingSectionTimerRef = useRef(null);
 
-  const sortedProjects = useMemo(() => getSortedProjects(projects), []);
-  const selectedProjects = useMemo(() => {
-    const priority = [
-      "waypoint-career-intelligence",
-      "findaside-football-planner",
-      "coach-canvas",
-      "portfolio-v3",
-    ];
-
-    return priority
-      .map((id) => sortedProjects.find((project) => project.id === id))
-      .filter(Boolean);
-  }, [sortedProjects]);
+  const selectedProjects = useMemo(() => getFeaturedProjects(), []);
 
   useEffect(() => {
     const sectionNodes = navSections
@@ -235,6 +229,7 @@ export default function Home() {
     window.clearTimeout(pendingSectionTimerRef.current);
     pendingSectionTimerRef.current = window.setTimeout(() => {
       pendingSectionRef.current = null;
+      window.dispatchEvent(new Event("scroll"));
     }, 1200);
 
     setActiveSection(id);
@@ -254,6 +249,7 @@ export default function Home() {
 
         <section
           id="home"
+          tabIndex={-1}
           className="relative flex min-h-[86svh] scroll-mt-24 items-center pb-16 pt-24"
         >
           <PageContainer>
@@ -261,26 +257,24 @@ export default function Home() {
               <div className="w-full max-w-6xl">
                 <p className="mb-7 font-mono text-[11px] uppercase text-[var(--text-muted)]">
                   <span className="text-[var(--accent-primary)]">00 /</span>{" "}
-                  Hrishikesh Varma · Frontend + Full-Stack · Dublin
+                  Hrishikesh Varma · UX Engineer · Dublin
                 </p>
                 <HeroTitle />
                 <p className="mt-9 max-w-2xl text-lg leading-8 text-[var(--text-secondary)] sm:text-xl sm:leading-9">
-                  Frontend-focused{" "}
+                  I&apos;m a{" "}
                   <span className="relative inline-block font-semibold text-[var(--accent-primary)] after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-[var(--accent-primary)] after:transition-transform after:duration-200 hover:after:scale-x-100">
-                    full-stack developer
+                    UX Engineer
                   </span>{" "}
-                  building responsive, accessible products with React, Next.js
-                  and TypeScript. UX research and product design sharpen how I
-                  solve the problem.
+                  who enjoys working between design and development — understanding problems, shaping interfaces, and bringing them to life with React, Next.js, and TypeScript.
                 </p>
                 <DeveloperPulse />
                 <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
                   <button
                     type="button"
-                    onClick={() => scrollToSection("projects")}
+                    onClick={() => handleNavigate("projects")}
                     className="group inline-flex min-h-12 items-center justify-center gap-2 bg-[var(--accent-primary)] px-5 text-sm font-bold text-[var(--on-accent)] transition-colors hover:bg-[var(--accent-hover)]"
                   >
-                    View development work
+                    Explore my work
                     <FiArrowUpRight aria-hidden />
                   </button>
                   <a
@@ -304,14 +298,13 @@ export default function Home() {
           </PageContainer>
         </section>
 
-        <SectionShell id="projects" eyebrow="Selected development projects">
+        <SectionShell id="projects" eyebrow="Selected work">
           <div className="mb-10 grid gap-5 lg:grid-cols-[0.58fr_0.42fr] lg:items-end">
             <h2 className="max-w-3xl text-[clamp(2.5rem,5vw,4.6rem)] font-extrabold leading-[0.94] tracking-normal text-[var(--text-primary)]">
-              Products, not just prototypes.
+              From the problem to the product.
             </h2>
             <p className="max-w-xl text-base leading-7 text-[var(--text-secondary)] lg:pb-1">
-              Selected work spanning frontend architecture, full-stack systems,
-              mobile development and UX-informed product decisions.
+              A mix of products I&apos;ve helped shape and build, UX problems I&apos;ve explored, and interfaces I&apos;ve brought to life.
             </p>
           </div>
           <div className="grid gap-px bg-[var(--border-primary)] md:grid-cols-2">
@@ -324,7 +317,7 @@ export default function Home() {
                 <ProjectTransitionLink
                   href={`/projects/${project.id}?from=home`}
                   label={`Opening ${getProjectName(project.title)} case study`}
-                  className="flex h-full flex-col p-5 transition-colors duration-200 hover:bg-[var(--bg-secondary)] focus-visible:outline-none"
+                  className="flex h-full flex-col p-5 transition-colors duration-200 hover:bg-[var(--bg-secondary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-primary)] focus-visible:-outline-offset-2"
                 >
                   <div className="flex h-[190px] items-start justify-between gap-4 overflow-hidden pb-5 sm:h-[180px]">
                     <div className="min-w-0">
@@ -340,7 +333,7 @@ export default function Home() {
                           project.summary}
                       </p>
                       <div className="mt-3 flex max-h-8 flex-wrap gap-x-3 gap-y-1 overflow-hidden font-mono text-[10px] font-medium uppercase text-[var(--text-primary)]">
-                        {(project.technologies || []).slice(0, 3).map((tool) => (
+                        {(project.cardTags || project.technologies || []).map((tool) => (
                           <span key={tool}>{tool}</span>
                         ))}
                       </div>
@@ -370,16 +363,11 @@ export default function Home() {
                     <div className="absolute inset-x-0 bottom-0 flex min-h-12 items-center justify-end border-t border-[var(--border-primary)] bg-[var(--bg-primary)]/95 px-3 py-2 backdrop-blur-sm">
                       <ProjectTelemetry
                         projectId={project.id}
-                        fallbackYear={project.year}
+                        projectStatus={project.status}
                         hasLiveUrl={Boolean(project.liveUrl || project.websiteLinks?.length)}
                         hasSource={Boolean(project.githubUrl)}
                       />
                     </div>
-                    {project.workInProgress ? (
-                      <span className="absolute right-3 top-3 rounded-full bg-yellow-300 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.14em] text-black shadow-lg">
-                          Work in progress
-                      </span>
-                    ) : null}
                   </div>
                 </ProjectTransitionLink>
               </motion.article>
@@ -397,13 +385,13 @@ export default function Home() {
           </div>
         </SectionShell>
 
-        <SectionShell id="skills" eyebrow="Technical toolkit">
+        <SectionShell id="skills" eyebrow="Design & engineering toolkit">
           <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-none tracking-[-0.04em] text-[var(--text-primary)]">
-              Core stack
+              From design to code
             </h2>
             <p className="max-w-md text-sm leading-6 text-[var(--text-muted)] sm:text-right">
-              The tools I use most to take product ideas from interface to data.
+              The methods and tools I use to understand a problem, shape an experience and build it.
             </p>
           </div>
           <div>
@@ -423,10 +411,13 @@ export default function Home() {
             </div>
             <div className="border-l border-[var(--border-primary)] pl-6 sm:pl-8">
               <p className="max-w-2xl text-lg leading-8 text-[var(--text-secondary)]">
-                I&apos;m Hrishi, a frontend-focused full-stack developer based in
-                Dublin. My background in computer science, UX research and
-                product design helps me move from an unclear problem to a
-                responsive, accessible product that works in practice.
+                I&apos;m a designer-minded developer who likes being involved from the beginning — understanding what we&apos;re trying to solve, exploring how an experience should work, and figuring out how to build it.
+              </p>
+              <p className="mt-7 max-w-2xl text-lg leading-8 text-[var(--text-secondary)]">
+                My background combines professional frontend development with an MSc in Creative Digital Media &amp; UX. I&apos;ve worked on everything from UX research and Figma prototypes to React applications and mobile products. What I enjoy most is connecting those pieces, especially when a product is still taking shape.
+              </p>
+              <p className="mt-7 max-w-2xl text-base leading-7 text-[var(--text-secondary)]">
+                I&apos;ve worked in frontend development at Experion Technologies and Pixel Forge, and completed my MSc at TU Dublin in 2025 with First Class Honours.
               </p>
               <div className="mt-7 flex flex-wrap items-center gap-4">
                 <span className="inline-flex min-h-11 items-center gap-2 border border-[var(--border-primary)] px-3 text-xs text-[var(--text-secondary)]">
@@ -450,8 +441,7 @@ export default function Home() {
           <div className="grid gap-10 border-t border-[var(--border-primary)] pt-9 lg:grid-cols-[0.38fr_0.62fr]">
             <aside className="space-y-8">
               <p className="text-lg leading-8 text-[var(--text-secondary)]">
-                I&apos;m open to frontend and full-stack development opportunities,
-                especially with teams that value thoughtful product craft.
+                I&apos;m open to UX Engineer, Product Design Engineer, Frontend Engineer and design-minded Product Engineer roles.
               </p>
               <div className="border-t border-[var(--border-primary)]">
                 <a

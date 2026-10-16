@@ -34,39 +34,16 @@ async function repositoryStatus(project) {
   }
 }
 
-async function deploymentStatus(project) {
-  const url = project.websiteLinks?.[0]?.href || project.liveUrl;
-  if (!url) return null;
-
-  try {
-    const response = await fetch(url, {
-      method: "HEAD",
-      redirect: "follow",
-      next: { revalidate: 900 },
-      signal: AbortSignal.timeout(5000),
-    });
-    return response.ok;
-  } catch {
-    return false;
-  }
-}
-
 export async function GET() {
   const entries = await Promise.all(
     projects.map(async (project) => {
-      const [repository, online] = await Promise.all([
-        repositoryStatus(project),
-        deploymentStatus(project),
-      ]);
+      const repository = await repositoryStatus(project);
 
       return [
         project.id,
         {
-          online,
           updatedAt: repository?.updatedAt || null,
           language: repository?.language || null,
-          liveAvailable: Boolean(project.websiteLinks?.[0]?.href || project.liveUrl),
-          sourceAvailable: Boolean(project.githubUrl),
         },
       ];
     }),

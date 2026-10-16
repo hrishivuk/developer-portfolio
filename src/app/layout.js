@@ -14,11 +14,11 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata = {
-  title: "Hrishikesh Varma - Frontend & Full-Stack Developer",
+  title: "Hrishikesh Varma | UX Engineer & Frontend Developer",
   description:
-    "Dublin-based frontend-focused full-stack developer building thoughtful web and mobile products with React, Next.js and TypeScript.",
+    "UX Engineer and Frontend Developer based in Dublin, combining product design, interaction design and React/Next.js development to build thoughtful digital experiences.",
   keywords:
-    "Frontend Developer, Full-Stack Developer, React, Next.js, TypeScript, PostgreSQL, Product Engineering, UX, Dublin",
+    "UX Engineer, Product Design Engineer, Frontend Developer, React, Next.js, TypeScript, PostgreSQL, Product Engineering, UX, Dublin",
   authors: [{ name: "Hrishikesh Varma" }],
   creator: "Hrishikesh Varma",
   metadataBase: new URL(siteUrl),
@@ -28,18 +28,18 @@ export const metadata = {
     ],
   },
   openGraph: {
-    title: "Hrishikesh Varma - Frontend & Full-Stack Developer",
+    title: "Hrishikesh Varma | UX Engineer & Frontend Developer",
     description:
-      "Dublin-based frontend-focused full-stack developer building thoughtful web and mobile products with React, Next.js and TypeScript.",
+      "UX Engineer and Frontend Developer based in Dublin, combining product design, interaction design and React/Next.js development to build thoughtful digital experiences.",
     url: siteUrl,
     siteName: "Hrishikesh Varma Portfolio",
     type: "website",
   },
   twitter: {
     card: "summary",
-    title: "Hrishikesh Varma - Frontend & Full-Stack Developer",
+    title: "Hrishikesh Varma | UX Engineer & Frontend Developer",
     description:
-      "Dublin-based frontend-focused full-stack developer building thoughtful web and mobile products.",
+      "UX Engineer and Frontend Developer based in Dublin, combining product design, interaction design and React/Next.js development to build thoughtful digital experiences.",
   },
 };
 
