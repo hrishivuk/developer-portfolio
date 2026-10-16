@@ -67,12 +67,26 @@ function SectionShell({ id, eyebrow, children, className = "" }) {
 
 function HeroTitle() {
   return (
-    <h1 className="max-w-6xl text-[clamp(3rem,7vw,7rem)] font-extrabold leading-[0.9] tracking-normal text-[var(--text-primary)]">
-      Designing experiences.
-      <span className="block">
-        Building products<span className="text-[var(--accent-primary)]">.</span>
-      </span>
-    </h1>
+    <div className="hero-title-wrap">
+      <h1 className="hero-title font-extrabold text-[var(--text-primary)]">
+        <span className="hero-title-line">
+          <span className="hero-word hero-word-design">
+            Designing
+            <span className="hero-design-frame" aria-hidden="true">
+              <i /><i /><i /><i />
+            </span>
+          </span>{" "}experiences.
+        </span>{" "}
+        <span className="hero-title-line hero-build-line">
+          <span className="hero-word hero-word-build">
+            <span className="hero-code-grid" aria-hidden="true" />
+            <span className="hero-code-bracket hero-code-open" aria-hidden="true">&lt;</span>
+            Building
+            <span className="hero-code-bracket hero-code-close" aria-hidden="true">&gt;</span>
+          </span>{" "}products<span className="hero-title-period">.</span>
+        </span>
+      </h1>
+    </div>
   );
 }
 
