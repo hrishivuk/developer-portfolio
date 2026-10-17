@@ -37,9 +37,10 @@ export default function CustomCursor() {
   useEffect(() => {
     if (!enabled) return undefined;
 
-    document.documentElement.classList.add("has-custom-cursor");
-
     function move(event) {
+      if (event.pointerType === "touch") { hide(); return; }
+      if (event.target.closest("input, textarea, [contenteditable='true']")) { hide(); return; }
+      document.documentElement.classList.add("has-custom-cursor");
       pointerX.set(event.clientX);
       pointerY.set(event.clientY);
       setInteractive(Boolean(event.target.closest(interactiveSelector)));
@@ -51,6 +52,7 @@ export default function CustomCursor() {
     }
 
     function hide() {
+      document.documentElement.classList.remove("has-custom-cursor");
       visibleRef.current = false;
       setVisible(false);
       setPressed(false);
@@ -66,13 +68,16 @@ export default function CustomCursor() {
 
     window.addEventListener("pointermove", move);
     document.documentElement.addEventListener("mouseleave", hide);
+    window.addEventListener("blur", hide);
     window.addEventListener("pointerdown", press);
     window.addEventListener("pointerup", release);
 
     return () => {
       document.documentElement.classList.remove("has-custom-cursor");
+      visibleRef.current = false;
       window.removeEventListener("pointermove", move);
       document.documentElement.removeEventListener("mouseleave", hide);
+      window.removeEventListener("blur", hide);
       window.removeEventListener("pointerdown", press);
       window.removeEventListener("pointerup", release);
     };

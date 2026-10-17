@@ -83,7 +83,8 @@ export default function Navbar({ activeSection = "", onNavigate }) {
             <button
               type="button"
               onClick={() => navigateHome("home")}
-              className="group flex items-center gap-3 text-left"
+              aria-label="Go to homepage"
+              className="group flex min-h-11 min-w-11 items-center gap-3 text-left"
             >
               <span className="flex h-8 w-8 items-center justify-center bg-[var(--accent-primary)] text-xs font-black text-[var(--on-accent)]">
                 HV
@@ -93,7 +94,7 @@ export default function Navbar({ activeSection = "", onNavigate }) {
               </span>
             </button>
           ) : (
-            <Link href="/" className="group flex items-center gap-3">
+            <Link href="/" aria-label="Go to homepage" className="group flex min-h-11 min-w-11 items-center gap-3">
               <span className="flex h-8 w-8 items-center justify-center bg-[var(--accent-primary)] text-xs font-black text-[var(--on-accent)]">
                 HV
               </span>

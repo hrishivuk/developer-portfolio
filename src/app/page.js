@@ -157,11 +157,11 @@ function ContactForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className="page-eyebrow mb-2 block">Name</label>
-          <input id="name" name="name" type="text" value={formData.name} onChange={handleInputChange} required className={inputBase} style={fieldStyle} placeholder="Your name" />
+          <input id="name" name="name" type="text" autoComplete="name" value={formData.name} onChange={handleInputChange} required className={inputBase} style={fieldStyle} placeholder="Your name" />
         </div>
         <div>
           <label htmlFor="email" className="page-eyebrow mb-2 block">Email</label>
-          <input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange} required className={inputBase} style={fieldStyle} placeholder="you@email.com" />
+          <input id="email" name="email" type="email" autoComplete="email" value={formData.email} onChange={handleInputChange} required className={inputBase} style={fieldStyle} placeholder="you@email.com" />
         </div>
       </div>
 
@@ -279,9 +279,8 @@ export default function Home() {
                   <span className="relative inline-block font-semibold text-[var(--accent-primary)] after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-[var(--accent-primary)] after:transition-transform after:duration-200 hover:after:scale-x-100">
                     UX Engineer
                   </span>{" "}
-                  who enjoys working between design and development — understanding problems, shaping interfaces, and bringing them to life with React, Next.js, and TypeScript.
+                  with a strong frontend development background, working between product thinking, interface design and implementation with React, Next.js and TypeScript.
                 </p>
-                <DeveloperPulse />
                 <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
                   <button
                     type="button"
@@ -291,20 +290,19 @@ export default function Home() {
                     Explore my work
                     <FiArrowUpRight aria-hidden />
                   </button>
+                  <ResumeDownloadButton
+                    className="inline-flex min-h-12 items-center justify-center gap-2 border border-[var(--border-secondary)] px-5 text-sm font-bold text-[var(--text-primary)] transition-colors hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
+                  >
+                    Download résumé
+                  </ResumeDownloadButton>
                   <a
                     href="https://github.com/hrishivuk"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex min-h-12 items-center justify-center gap-2 border border-[var(--border-secondary)] px-5 text-sm font-bold text-[var(--text-primary)] transition-colors hover:border-[var(--text-muted)] hover:bg-[var(--bg-secondary)]"
+                    className="inline-flex min-h-12 items-center justify-center gap-2 px-2 text-sm font-bold text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-primary)]"
                   >
-                    <FiGithub aria-hidden />
-                    GitHub
+                    <FiGithub aria-hidden /> GitHub
                   </a>
-                  <ResumeDownloadButton
-                    className="inline-flex min-h-12 items-center justify-center px-2 text-sm font-bold text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-primary)]"
-                  >
-                    Download résumé
-                  </ResumeDownloadButton>
                 </div>
               </div>
 
@@ -333,24 +331,23 @@ export default function Home() {
                   label={`Opening ${getProjectName(project.title)} case study`}
                   className="flex h-full flex-col p-5 transition-colors duration-200 hover:bg-[var(--bg-secondary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-primary)] focus-visible:-outline-offset-2"
                 >
-                  <div className="flex h-[190px] items-start justify-between gap-4 overflow-hidden pb-5 sm:h-[180px]">
+                  <div className="flex min-h-[190px] items-start justify-between gap-4 pb-5">
                     <div className="min-w-0">
-                      <p className="mb-4 font-mono text-[10px] text-[var(--accent-primary)]">
+                      <p className="mb-4 font-mono text-[11px] text-[var(--text-muted)]">
                         {String(index + 1).padStart(2, "0")} / {project.year}
                       </p>
                       <h3 className="line-clamp-2 text-[1.75rem] font-extrabold leading-none tracking-normal text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent-primary)]">
                         {getProjectName(project.title)}
                       </h3>
-                      <p className="mt-3 line-clamp-2 min-h-12 max-w-xl text-sm leading-6 text-[var(--text-secondary)]">
+                      <p className="mt-3 min-h-12 max-w-xl text-sm leading-6 text-[var(--text-secondary)]">
                         {project.cardImpact ||
                           getProjectDescriptor(project.title) ||
                           project.summary}
                       </p>
-                      <div className="mt-3 flex max-h-8 flex-wrap gap-x-3 gap-y-1 overflow-hidden font-mono text-[10px] font-medium uppercase text-[var(--text-primary)]">
-                        {(project.cardTags || project.technologies || []).map((tool) => (
-                          <span key={tool}>{tool}</span>
-                        ))}
-                      </div>
+                      <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1">
+                      <span className="text-xs leading-5 text-[var(--text-muted)]">{project.primaryDiscipline}</span>
+                      <ProjectTelemetry projectStatus={project.cardStatus || project.status} revampInProgress={project.revampInProgress} />
+                    </div>
                     </div>
                     <span
                       className="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center border border-[var(--border-primary)] text-[var(--text-primary)] transition-colors group-hover:border-[var(--accent-primary)] group-hover:text-[var(--accent-primary)]"
@@ -374,14 +371,7 @@ export default function Home() {
                         }`}
                       />
                     ) : null}
-                    <div className="absolute inset-x-0 bottom-0 flex min-h-12 items-center justify-end border-t border-[var(--border-primary)] bg-[var(--bg-primary)]/95 px-3 py-2 backdrop-blur-sm">
-                      <ProjectTelemetry
-                        projectId={project.id}
-                        projectStatus={project.status}
-                        hasLiveUrl={Boolean(project.liveUrl || project.websiteLinks?.length)}
-                        hasSource={Boolean(project.githubUrl)}
-                      />
-                    </div>
+
                   </div>
                 </ProjectTransitionLink>
               </motion.article>
@@ -438,9 +428,10 @@ export default function Home() {
                   <FiMapPin aria-hidden /> Dublin / Remote / Hybrid
                 </span>
                 <ResumeDownloadButton className="inline-flex min-h-11 items-center border-b border-[var(--accent-primary)] text-sm font-bold text-[var(--text-primary)] transition-colors hover:text-[var(--accent-primary)]">
-                  Download CV
+                  Download résumé
                 </ResumeDownloadButton>
               </div>
+              <DeveloperPulse />
             </div>
           </div>
         </SectionShell>

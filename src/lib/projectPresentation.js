@@ -18,8 +18,11 @@ export function getProjectPresentation(project) {
   const supportingImages = allImages.filter(shot => !screenshots.some(selected => selected.src === shot.src));
   const sectionKeys = ['context'];
   if (contributions.length) sectionKeys.push('contribution');
-  if (allImages.length) sectionKeys.push('gallery');
+  if (study.research?.length) sectionKeys.push('research');
+  if (study.flow?.length) sectionKeys.push('flow');
   if (decisions.length || supportingDecisions.length) sectionKeys.push('decisions');
+  if (allImages.length) sectionKeys.push('gallery');
+  if (study.testing?.length) sectionKeys.push('testing');
   if (study.outcome || study.reflection || study.limitations || project.summary) sectionKeys.push('outcome');
   const sectionNumber = key => String(sectionKeys.indexOf(key) + 1).padStart(2, '0');
   return { contributions, decisions, supportingDecisions, screenshots, supportingImages, sectionNumber };

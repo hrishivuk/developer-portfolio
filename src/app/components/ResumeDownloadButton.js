@@ -130,6 +130,7 @@ export default function ResumeDownloadButton({
                       <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent-primary)]" aria-hidden />
                     ) : null}
                     {resume.label}
+                    {resume.primary ? <span className="sr-only"> — primary résumé</span> : null}
                   </span>
                   <FiDownload className="text-[var(--accent-primary)]" aria-hidden />
                 </button>

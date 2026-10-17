@@ -90,10 +90,14 @@ export const projects = [
       "UX/UI Design",
       "React",
       "TypeScript"
-    ]
+    ],
+    "deliverable": "Contributed creator-commerce workflows, interface design and frontend implementation for artwork and listing preparation.",
+    "nextProjectId": "coach-canvas",
+    "cardStatus": "Design & frontend exploration"
   },
   {
     "id": "coach-canvas",
+    "revampInProgress": true,
     "primaryDiscipline": "Product Design & Engineering",
     "disciplines": [
       "UX Research",
@@ -101,7 +105,7 @@ export const projects = [
       "Mobile Engineering"
     ],
     "archiveOrder": 1,
-    "featuredOrder": 1,
+    "featuredOrder": 3,
     "title": "CoachCanvas – Club & Player Management App",
     "category": "Full Product Lifecycle",
     "year": "2025",
@@ -258,7 +262,10 @@ export const projects = [
       "Firebase Storage",
       "React Navigation",
       "Android Studio"
-    ]
+    ],
+    "deliverable": "Designed and developed a functional mobile prototype with a teammate, including role-aware football club workflows and an Android release build.",
+    "nextProjectId": "findaside-football-planner",
+    "cardStatus": "Functional mobile prototype"
   },
   {
     "id": "waypoint-career-intelligence",
@@ -351,10 +358,13 @@ export const projects = [
       "Product Design",
       "Next.js",
       "Supabase"
-    ]
+    ],
+    "deliverable": "Built and deployed a prototype for career knowledge, job analysis, CV selection and reusable application details.",
+    "nextProjectId": "flyh-ai"
   },
   {
     "id": "flexsave-smart-savings",
+    "revampInProgress": true,
     "primaryDiscipline": "UX & Interface Design",
     "disciplines": [
       "UX/UI Design",
@@ -366,11 +376,11 @@ export const projects = [
     "category": "UX Design",
     "year": "2025",
     "featured": true,
-    "cardImpact": "Designed a coupon wallet, offer details and sharing interactions in a five-day Figma sprint.",
-    "oneLiner": "A mobile UX concept exploring a simpler way to save, organise and use offers and coupons.",
-    "summary": "A five-day UX/UI design sprint exploring coupon discovery, organisation and redemption interactions through a high-fidelity Figma prototype. The concept includes a coupon wallet, an add-coupon flow, offer details and social sharing screens.",
-    "description": "FlexSave explores how a mobile interface could bring scattered offers into one place. The prototype uses retailer-led coupon cards, offer details, an add-coupon scanning concept and sharing interactions. It is a design deliverable, not a working coupon service or a shipped application.",
-    "image": "/images/flexsave/flexsave.png",
+    "cardImpact": "Revisiting an early coupon-wallet concept to explore nearby offers, contextual discovery and clearer navigation.",
+    "oneLiner": "An early university coupon-management concept, now being revisited as an offer-discovery experience.",
+    "summary": "FlexSave began as a university UX/UI project focused on storing and managing coupons. The original design reflects an early stage of my design-learning journey. I’m now exploring a new direction around nearby offers, contextual recommendations, saving offers and more structured navigation.",
+    "description": "The original five-day university concept explored a coupon wallet, offer details, an add-coupon flow and sharing. The redesign is in progress: the current screenshot explores a discovery-led home screen, with location context and more prominent offer presentation. The original screens remain here as historical design evidence, not as my current finished work.",
+    "image": "/images/flexsave/flexsave-new.png",
     "technologies": [
       "Figma",
       "UI Design",
@@ -382,94 +392,127 @@ export const projects = [
     "githubUrl": "",
     "role": "UX/UI Designer",
     "responsibilities": [
-      "Defined a focused mobile concept for collecting and organising coupons.",
-      "Designed coupon browsing, offer details, add-coupon and sharing interfaces.",
-      "Established reusable cards, typography and colour treatments for the prototype.",
-      "Created interactive Figma flows to communicate intended interactions.",
-      "Delivered high-fidelity screens within a five-day design sprint."
+      "Original university concept: defined a mobile experience for collecting and organising coupons.",
+      "Original university concept: designed coupon browsing, offer details, an add-coupon concept and sharing interfaces.",
+      "Original university concept: created reusable interface patterns and interactive Figma flows during a five-day sprint.",
+      "Redesign in progress: exploring nearby offers, contextual discovery, offer-saving actions and a more structured navigation model."
     ],
     "highlights": [
-      "Coupon wallet with retailer-led cards and visible redemption actions.",
-      "Add-coupon concept using a barcode-scanning interface.",
-      "Offer-detail screens with sharing controls.",
-      "Social-feed concept with posts, likes and comments."
+      "Original concept: coupon storage and management, with retailer-led cards and offer details.",
+      "Original concept: proposed barcode-scanning and social-sharing interfaces.",
+      "Current exploration: location context, nearby/trending cues and a featured offer card.",
+      "Redesign in progress: saving and recommendation behaviour remain design intentions."
     ],
     "caseStudy": {
-      "eyebrow": "Five-day UX sprint",
-      "timeline": "5 days",
-      "status": "High-fidelity prototype",
-      "problem": "Discounts and coupons can become difficult to organise, remember and use, especially when offers are scattered across different sources.",
-      "opportunity": "A mobile experience for collecting, browsing and managing coupons and savings opportunities in one place.",
+      "eyebrow": "Original university concept · Redesign in progress",
+      "timeline": "Original concept: five-day sprint · 2025; redesign in progress",
+      "status": "Original university concept · Redesign in progress",
+      "problem": "The original project explored how to store and manage scattered coupons. The redesign asks how people might discover relevant nearby offers before deciding what to save; this is a design question, not a validated user finding.",
+      "opportunity": "Revisit the wallet-led concept with a discovery-led entry point, contextual offer presentation and more structured navigation. The new direction is still being explored.",
       "users": [
         "Students",
         "Young professionals",
         "Casual savers"
       ],
       "productThinking": [
-        "Kept the sprint focused on finding, storing and using coupons rather than broad financial planning.",
-        "Grouped coupon management and social sharing within a mobile experience."
+        "Original scope: collect and organise coupons, with sharing as a supporting concept.",
+        "New direction: explore discovery of nearby offers, contextual recommendations and saving offers. These are design intentions, not validated or implemented capabilities."
       ],
       "designDecisions": [
-        "Used retailer names, discount values and clear actions to establish hierarchy on coupon cards.",
-        "Separated the coupon wallet, offer details and add-coupon overlay into distinct interaction states.",
-        "Explored sharing controls and a social feed as supporting ways to exchange offers."
+        "Information hierarchy: the original wallet leads with coupon counts and stored retailer cards. The new preview leads with location, nearby/trending cues and Today’s Discoveries, shifting attention towards finding an offer.",
+        "Offer presentation: the older screens emphasise retailer logos, discount values and redemption controls. The preview uses a larger product image, discount, merchant name, rating and View Details action. Its counts, rating and offer details are sample interface content, not verified live data.",
+        "Discoverability: the redesign introduces location and contextual recommendation cues. How offers would be selected or personalised is still an open design question; the screenshot does not demonstrate a recommendation system.",
+        "Navigation and saving: the new bottom bar groups Wallet with compass and search icons, and the offer card includes an icon action. The intended discovery and saving flows, icon meanings and active navigation state still need refinement; the preview is not evidence of a completed journey."
       ],
-      "outcome": "Delivered a high-fidelity coupon and savings-experience prototype during a five-day design sprint. The screens demonstrate the proposed interface and interaction flows; they do not establish functioning barcode scanning, coupon redemption or measured savings.",
-      "reflection": "The short sprint made scope important: a small set of clear coupon interactions was more useful to develop than a broad collection of financial features.",
+      "outcome": "The original university sprint produced a coupon-wallet prototype. The redesign is ongoing, with one preview exploring nearby offer discovery and a different visual hierarchy. No completed redesign, working offer service, recommendation engine, barcode scanning or coupon redemption is claimed.",
+      "reflection": "Revisiting this early project gives me a chance to question the structure as well as the visual treatment. The next step is to work through discovery, offer details and saving as a coherent flow, then evaluate whether the navigation and offer presentation are understandable.",
       "handoffDecisions": [
-        "Used reusable interface patterns and a Figma prototype to communicate intended behaviour."
-      ]
+        "Original deliverable: reusable interface patterns and a Figma prototype communicated the proposed coupon-wallet interactions."
+      ],
+      "context": "I created FlexSave early in my university design journey. I’m revisiting it now to apply what I’ve learned about UX and interface design, starting with how people discover offers and find their way through the experience. The older screens document where the project began; the new preview shows a direction I’m still working through.",
+      "galleryIntro": "The first image is the current redesign preview, a work-in-progress concept. The remaining six images are from the original university project and are preserved as historical design evidence. They show the earlier wallet, coupon details, add-coupon and sharing direction.",
+      "limitations": "The redesign has not been presented here as usability-tested or validated. The available evidence is one static preview; no testing results, measured improvements or implemented functionality are documented."
     },
     "screenshots": [
       {
+        "src": "/images/flexsave/flexsave-new.png",
+        "alt": "Redesign preview — work in progress: nearby and trending cues, a featured offer card and revised bottom navigation. Sample offer data in a static concept preview.",
+        "placement": "overview",
+        "aspect": "portrait"
+      },
+      {
         "src": "/images/flexsave/fs-all-coups.png",
-        "alt": "FlexSave all coupons view - main dashboard showing available savings opportunities",
+        "alt": "Original university concept — FlexSave all coupons view - main dashboard showing available savings opportunities",
         "placement": "overview",
         "aspect": "portrait"
       },
       {
         "src": "/images/flexsave/fs-add-coupon.png",
-        "alt": "Add-coupon overlay showing a proposed barcode-scanning interaction",
+        "alt": "Original university concept — Add-coupon overlay showing a proposed barcode-scanning interaction",
         "placement": "features",
         "aspect": "portrait"
       },
       {
         "src": "/images/flexsave/fs-coup1.png",
-        "alt": "Coupon detail concept with a retailer discount, placeholder offer information and sharing controls",
+        "alt": "Original university concept — Coupon detail concept with a retailer discount, placeholder offer information and sharing controls",
         "placement": "features",
         "aspect": "portrait"
       },
       {
         "src": "/images/flexsave/fs-coup2.png",
-        "alt": "FlexSave coupon interaction screen - engaging with savings offers",
+        "alt": "Original university concept — FlexSave coupon interaction screen - engaging with savings offers",
         "placement": "features",
         "aspect": "portrait"
       },
       {
         "src": "/images/flexsave/fs-posts.png",
-        "alt": "Social-feed concept with placeholder posts, like and comment actions",
+        "alt": "Original university concept — Social-feed concept with placeholder posts, like and comment actions",
+        "placement": "process",
+        "aspect": "portrait"
+      },
+      {
+        "src": "/images/flexsave/flexsave.png",
+        "alt": "Original university concept — retailer coupon detail preview previously used as the project cover",
         "placement": "process",
         "aspect": "portrait"
       }
     ],
-    "status": "High-fidelity prototype",
+    "status": "Original university concept · Redesign in progress",
     "platform": "Mobile interface concept",
-    "timeline": "Five-day design sprint · 2025",
-    "projectType": "Five-day design sprint / High-fidelity prototype",
-    "problem": "Discounts and coupons can become difficult to organise, remember and use, especially when offers are scattered across different sources.",
-    "solution": "A mobile experience for collecting, browsing and managing coupons and savings opportunities in one place.",
+    "timeline": "Original concept: five-day sprint · 2025; redesign in progress",
+    "projectType": "University UX/UI concept / Ongoing redesign exploration",
+    "problem": "The original project explored how to store and manage scattered coupons. The redesign asks how people might discover relevant nearby offers before deciding what to save; this is a design question, not a validated user finding.",
+    "solution": "Revisit the wallet-led concept with a discovery-led entry point, contextual offer presentation and more structured navigation. The new direction is still being explored.",
     "galleryOrder": [
+      "/images/flexsave/flexsave-new.png",
       "/images/flexsave/fs-all-coups.png",
       "/images/flexsave/fs-add-coupon.png",
       "/images/flexsave/fs-coup1.png",
       "/images/flexsave/fs-coup2.png",
-      "/images/flexsave/fs-posts.png"
+      "/images/flexsave/fs-posts.png",
+      "/images/flexsave/flexsave.png"
     ],
     "cardTags": [
       "Figma",
       "Interaction Design",
       "Prototyping"
-    ]
+    ],
+    "deliverable": "Original coupon-wallet prototype; the current redesign is represented by one work-in-progress interface preview.",
+    "nextProjectId": "brightspace-learning-experience",
+    "workInProgress": true,
+    "heroFit": "contain",
+    "headerPortrait": true,
+    "heroImageAlt": "FlexSave redesign preview — work-in-progress concept for nearby offer discovery, not an implemented product",
+    "contributions": {
+      "Original university concept": [
+        "Designed the coupon wallet, offer-detail screens, add-coupon overlay and sharing concepts.",
+        "Created interactive Figma flows and high-fidelity screens during an early five-day university sprint."
+      ],
+      "Redesign exploration": [
+        "Revisiting the information hierarchy to introduce location and discovery before individual offer details.",
+        "Exploring more prominent offer imagery, contextual cues, saving offers and clearer navigation. The supplied preview is an early design direction, not a completed flow."
+      ]
+    }
   },
   {
     "id": "brightspace-learning-experience",
@@ -480,22 +523,22 @@ export const projects = [
       "Prototyping"
     ],
     "archiveOrder": 1,
-    "featuredOrder": 3,
+    "featuredOrder": 1,
     "title": "Brightspace Pulse – Growth Hub Resume Builder",
     "category": "UX / Product Design",
     "year": "2025",
     "featured": true,
     "cardImpact": "Owned the Resume Builder experience and helped validate the wider concept through usability testing.",
-    "oneLiner": "A career-growth extension for Brightspace Pulse centred on an end-to-end résumé builder.",
-    "summary": "A research-led team UX concept extending Brightspace Pulse with career-growth tools, validated through moderated usability testing. I contributed to research and owned the end-to-end Resume Builder design.",
+    "oneLiner": "Designing a Resume Builder experience within Brightspace Pulse to help students prepare for professional opportunities.",
+    "summary": "A research-led team UX concept exploring career tools within an existing learning platform. Owned the Resume Builder experience, from user flows and interface design to interactive prototyping and moderated usability testing.",
     "description": "Growth Hub explored how Brightspace Pulse could evolve from a learning companion into a platform that also supports employability and professional development. The team proposed Portfolio, Resume Builder, and Connect features, with my main contribution focused on designing the end-to-end Resume Builder experience.",
-    "image": "/images/brightspace/brightspace.png",
+    "image": "/images/brightspace/resume-preview.png",
     "heroFit": "contain",
     "platform": "Brightspace Pulse mobile concept",
     "timeline": "4 weeks · 2025",
     "team": "3 designers",
     "showcaseOverview": "Growth Hub is a concept extension for Brightspace Pulse that helps students showcase work, build professional resumes, and expand their academic network without leaving the university ecosystem.",
-    "problem": "Brightspace Pulse helps students manage coursework, deadlines, and notifications, but offers limited support when they begin preparing for internships, placements, or graduate roles.",
+    "problem": "The team’s product review identified no integrated résumé builder or portfolio space in the Pulse experience they examined. Growth Hub explored whether career preparation could fit alongside coursework; this was a design opportunity, not a proven demand for a shipped feature.",
     "solution": "The team proposed Growth Hub, a new Brightspace Pulse section containing Portfolio, Resume Builder, and Connect. My focus was the Resume Builder, helping students create, customise, upload, preview, edit, and download CVs directly inside the app.",
     "technologies": [
       "Figma",
@@ -547,19 +590,19 @@ export const projects = [
       "Designed high-fidelity mobile interfaces in Figma.",
       "Built interactive prototypes for usability testing.",
       "Conducted user testing and analysed participant feedback.",
-      "Iterated designs based on research findings."
+      "Reviewed participant feedback to assess the proposed experience."
     ],
     "highlights": [
       "Team UX project extending an existing university product rather than designing from scratch.",
       "Primary ownership of the Resume Builder feature inside the broader Growth Hub concept.",
       "Mobile-first Figma prototype covering CV creation, upload, edit, preview, and download flows.",
-      "Moderated usability testing showed strong ratings for navigation, interface clarity, and task completion."
+      "Moderated testing and a follow-up survey recorded participant ratings of task feasibility, navigation, UI and component findability."
     ],
     "caseStudy": {
       "eyebrow": "University UX concept",
       "timeline": "4 weeks · 2025",
       "status": "High-fidelity prototype",
-      "problem": "Brightspace Pulse helps students stay organised with coursework, deadlines, and notifications, but offers little support once students begin preparing for internships, placements, or graduate roles.",
+      "problem": "The team’s product review identified no integrated résumé builder or portfolio space in the Pulse experience they examined. Growth Hub explored whether career preparation could fit alongside coursework; this was a design opportunity, not a proven demand for a shipped feature.",
       "opportunity": "Explore how Brightspace Pulse could support both academic success and career development by introducing professional growth features directly within the existing application.",
       "users": [
         "University students",
@@ -576,17 +619,53 @@ export const projects = [
         "Validated the proposed experience through moderated usability testing with TU Dublin students."
       ],
       "designDecisions": [
-        "Designed Resume Builder as a native Brightspace Pulse feature rather than a separate tool.",
-        "Supported two starting points: building a new CV from templates or uploading an existing CV.",
-        "Created flows for template selection, resume creation, editing, preview, and download.",
-        "Extended the existing visual language so the new feature felt familiar inside Brightspace Pulse."
+        "Offer both Build CV and Upload CV so students can start a new document or bring an existing one. The flow diagram and upload screen document these separate entry points.",
+        "Show template choices before personal details, making the document style visible before asking students to enter their information.",
+        "Keep View CV, Edit CV and Download CV together on the preview so students can review the result and choose their next step.",
+        "Reuse Brightspace’s blue palette, Roboto typography, form styles and navigation structure. Familiar patterns were the design rationale for limiting the learning required by the extension; no reduction in learning time was measured."
       ],
-      "outcome": "Delivered a Figma concept for student career support within Brightspace Pulse. The team explored Portfolio, Resume Builder and Connect, with personal design ownership of the Resume Builder and moderated usability testing with TU Dublin students.",
-      "reflection": "Working within an existing product taught me how to extend a mature design system instead of designing from scratch. The challenge was introducing useful new functionality while keeping the experience familiar and aligned with existing navigation patterns.",
+      "outcome": "Delivered an interactive Figma Resume Builder covering template selection, personal details, CV upload, preview, editing access and download access within the team’s Growth Hub concept. Moderated sessions and survey feedback tested the prototype; no production application, Brightspace adoption or commercial launch is claimed.",
+      "reflection": "Extending an existing product meant balancing a new career workflow with familiar navigation and interface patterns. The testing also highlighted the difference between favourable interface ratings and evidence that a feature meets a sustained need. A next round would examine component findability and document the resulting design changes.",
       "scopeNotes": [
         "No application development was included in this project.",
         "Deliverables focused on UX research, product strategy, user flows, wireframes, high-fidelity UI, interactive Figma prototyping, and usability testing."
-      ]
+      ],
+      "context": "Brightspace Pulse supports coursework, deadlines and course updates. In a four-week university brief, a team of three explored adding career-development tools without replacing the app’s existing navigation and visual language. Portfolio and Connect were shared team scope; Resume Builder was my individual design responsibility.",
+      "research": [
+        {
+          "title": "Discovery and product review",
+          "body": "Research, market study and user study formed the discovery stage. The documented gap analysis identified reliance on Word, Canva or external websites for CV creation, alongside missing spaces for project portfolios and academic networking. These are the team’s recorded opportunity statements; the case study does not provide interview transcripts or a detailed competitor comparison."
+        },
+        {
+          "title": "From opportunity to a testable concept",
+          "body": "The team proposed Portfolio, Resume Builder and Connect within Growth Hub. The assumption to test was that bringing these tools into a familiar student application would be useful and understandable. Later prototype feedback assessed that concept; it did not establish market demand."
+        }
+      ],
+      "flow": [
+        {
+          "title": "An addition to the existing application",
+          "body": "The documented flow places Growth Hub under the existing home experience, then branches into Portfolio, Resume and Connect. The navigation comparison adds Growth while retaining Upcoming, Courses and Notifications."
+        },
+        {
+          "title": "The Resume Builder path",
+          "body": "Within Resume, students can Build CV, Edit CV, Upload CV, View CV or Download CV. Build CV leads to template selection and personal details; Upload CV offers a separate entry point for an existing document. The finished preview exposes view, edit and download actions together."
+        }
+      ],
+      "testing": [
+        {
+          "title": "Method and tasks",
+          "body": "Moderated sessions took place on the TU Dublin campus using a Figma prototype, followed by a survey. Participants first explored the interface, then chose one of the three feature areas. The response table records seven responses: four Build CV tasks, two View Project tasks and one Get Endorsed task."
+        },
+        {
+          "title": "What the feedback supports",
+          "body": "Across all seven responses, navigation and UI design each received six ratings of 5/5 and one of 4/5. Among the four Build CV responses, task feasibility was rated 4, 5, 5 and 5; component findability was rated 5, 3, 4 and 4. These are self-reported ratings, not observed task-completion rates, and the overall results cover more than Resume Builder."
+        },
+        {
+          "title": "What remained uncertain",
+          "body": "Usefulness and willingness to use the wider concept varied. The material does not record a detailed task script, qualitative comments or a traceable sequence of changes after testing. The lower component-findability ratings suggest a useful focus for a further test; they do not establish a specific design defect or a completed iteration."
+        }
+      ],
+      "galleryIntro": "The Resume Builder screens show the individual feature ownership: preview, creation, template selection, entry actions and upload. The original user flow and navigation comparison explain how it fits into Growth Hub. Team features and exploratory sketches remain available below."
     },
     "screenshots": [
       {
@@ -629,13 +708,13 @@ export const projects = [
       },
       {
         "src": "/images/brightspace/Connect Home Screen.png",
-        "alt": "Networking home screen for connecting with people and career support",
+        "alt": "Team concept: Connect entry screen for endorsements, career opportunities and networking",
         "placement": "features",
         "aspect": "portrait"
       },
       {
         "src": "/images/brightspace/GP Offer List.png",
-        "alt": "Career opportunities screen showing available growth and job-related offers",
+        "alt": "Team concept: career opportunities list within Connect",
         "placement": "features",
         "aspect": "portrait"
       },
@@ -647,18 +726,50 @@ export const projects = [
       },
       {
         "src": "/images/brightspace/Reference Screenshot.png",
-        "alt": "Professor reference screen for notes and academic recommendations",
+        "alt": "Existing Brightspace Courses screen used as a visual and navigation reference",
         "placement": "features",
         "aspect": "portrait"
+      },
+      {
+        "src": "/images/brightspace/resume-preview.png",
+        "alt": "Resume Builder preview with View CV, Edit CV and Download CV actions; extracted from the original case study, page 10",
+        "aspect": "portrait",
+        "placement": "process"
+      },
+      {
+        "src": "/images/brightspace/resume-personal-details.png",
+        "alt": "Build CV personal-details step with name, desired job title and description fields; original case study, page 10",
+        "aspect": "portrait",
+        "placement": "process"
+      },
+      {
+        "src": "/images/brightspace/resume-upload.png",
+        "alt": "Upload CV entry point for an existing document; original case study, page 10",
+        "aspect": "portrait",
+        "placement": "process"
+      },
+      {
+        "src": "/images/brightspace/resume-user-flow.png",
+        "alt": "Original user flow: existing application to Growth Hub, then Resume and its build, edit, upload, view and download branches; case study, page 7",
+        "aspect": "wide",
+        "placement": "process"
+      },
+      {
+        "src": "/images/brightspace/brightspace.png",
+        "alt": "Supporting overview of the Growth navigation within the course experience",
+        "aspect": "wide",
+        "placement": "process"
       }
     ],
     "status": "High-fidelity prototype",
     "projectType": "University team UX project",
     "galleryOrder": [
+      "/images/brightspace/resume-preview.png",
+      "/images/brightspace/resume-personal-details.png",
       "/images/brightspace/BuildCV1.png",
       "/images/brightspace/Open Resume Tab.png",
-      "/images/brightspace/ResumeSketch.png",
-      "/images/brightspace/GrowthSketch.png",
+      "/images/brightspace/resume-upload.png",
+      "/images/brightspace/resume-user-flow.png",
       "/images/brightspace/beforeMenu.png",
       "/images/brightspace/AfterMenu.png"
     ],
@@ -666,7 +777,11 @@ export const projects = [
       "Figma",
       "Interaction Design",
       "Prototyping"
-    ]
+    ],
+    "deliverable": "Delivered and tested an interactive Resume Builder prototype as part of a wider student career-growth concept.",
+    "nextProjectId": "flyh-ai",
+    "heroImageAlt": "Resume Builder prototype preview with View CV, Edit CV and Download CV actions",
+    "headerPortrait": true
   },
   {
     "id": "portfolio-v3",
@@ -742,7 +857,9 @@ export const projects = [
       "Next.js",
       "React",
       "Motion"
-    ]
+    ],
+    "deliverable": "Designed and built a responsive Next.js portfolio with shared components, project case studies and contact workflows.",
+    "nextProjectId": "findaside-football-planner"
   },
   {
     "id": "findaside-football-planner",
@@ -901,7 +1018,9 @@ export const projects = [
       "React",
       "Next.js",
       "Tailwind CSS"
-    ]
+    ],
+    "deliverable": "Built responsive game-management interfaces and a Next.js marketing website during professional contract work.",
+    "nextProjectId": "brightspace-learning-experience"
   },
   // {
   //   id: "android-expense-tracker",

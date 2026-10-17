@@ -65,25 +65,24 @@ export default function ProjectsPage() {
               <ProjectTransitionLink
                 href={`/projects/${project.id}?from=projects`}
                 label={`Opening ${getProjectName(project.title)} case study`}
-                className="flex min-h-[460px] flex-col p-5 transition-colors duration-200 hover:bg-[var(--bg-secondary)] sm:p-6"
+                className="flex h-full min-h-[460px] flex-col p-5 transition-colors duration-200 hover:bg-[var(--bg-secondary)] sm:p-6"
               >
-                <div className="flex h-[200px] items-start justify-between gap-5 overflow-hidden pb-6 sm:h-[190px]">
+                <div className="flex min-h-[200px] items-start justify-between gap-5 pb-6">
                   <div className="min-w-0">
-                    <p className="font-mono text-[10px] text-[var(--accent-primary)]">
+                    <p className="font-mono text-[11px] text-[var(--text-muted)]">
                       {String(index + 1).padStart(2, "0")} / {project.year}
                     </p>
                     <h3 className="mt-5 text-[clamp(1.8rem,4vw,3rem)] font-extrabold leading-none tracking-normal text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent-primary)]">
                       {getProjectName(project.title)}
                     </h3>
-                    <p className="mt-3 line-clamp-2 min-h-12 max-w-xl text-sm leading-6 text-[var(--text-secondary)]">
+                    <p className="mt-3 min-h-12 max-w-xl text-sm leading-6 text-[var(--text-secondary)]">
                       {project.cardImpact ||
                         getProjectDescriptor(project.title) ||
                         project.summary}
                     </p>
-                    <div className="mt-3 flex max-h-8 flex-wrap gap-x-3 gap-y-1 overflow-hidden font-mono text-[10px] font-medium uppercase text-[var(--text-primary)]">
-                      {(project.cardTags || project.technologies || []).map((tool) => (
-                        <span key={tool}>{tool}</span>
-                      ))}
+                    <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1">
+                      <span className="text-xs leading-5 text-[var(--text-muted)]">{project.primaryDiscipline}</span>
+                      <ProjectTelemetry projectStatus={project.cardStatus || project.status} revampInProgress={project.revampInProgress} />
                     </div>
                   </div>
                   <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-[var(--border-primary)] text-[var(--text-primary)] transition-colors group-hover:border-[var(--accent-primary)] group-hover:text-[var(--accent-primary)]">
@@ -105,14 +104,7 @@ export default function ProjectsPage() {
                       }`}
                     />
                   ) : null}
-                  <div className="absolute inset-x-0 bottom-0 flex min-h-12 items-center justify-end border-t border-[var(--border-primary)] bg-[var(--bg-primary)]/95 px-3 py-2 backdrop-blur-sm">
-                    <ProjectTelemetry
-                      projectId={project.id}
-                      projectStatus={project.status}
-                      hasLiveUrl={Boolean(project.liveUrl || project.websiteLinks?.length)}
-                      hasSource={Boolean(project.githubUrl)}
-                    />
-                  </div>
+
                 </div>
               </ProjectTransitionLink>
             </article>
